@@ -38,3 +38,19 @@ More details will be shared later. In the meantime, feel free to create issues o
 
 
 Enough talking, time to make it last... forever!
+
+---
+
+New TDUF platform, aiming for efficiency, ease of use and development
+
+This is POC for TDUF.next platform, nodejs server and webapp.
+
+## Server
+
+### Global install
+
+    npm add -g pkg
+
+### Development
+
+Start dev server: `npm start`
