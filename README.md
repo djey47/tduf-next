@@ -51,6 +51,16 @@ This is POC for TDUF.next platform, nodejs server and webapp.
 
     npm add -g pkg
 
+### Install
+
+    cd server && npm install
+
 ### Development
 
 Start dev server: `npm start`
+
+## Client
+
+    cd client && npm install
+
+### Install
