@@ -9,6 +9,8 @@ const serverConfig = require('./config').get();
 const operations = require('./ops/operations');
 
 function main(args) {
+    // TODO Logging mechanism: winston?
+
     // Java fix
     process.env.PATH = `${process.env.PATH}:${serverConfig.java.jrePath}`;
 
