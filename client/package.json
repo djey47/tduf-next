@@ -12,7 +12,8 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-code-highlight": "^0.7.4"
+    "vue-code-highlight": "^0.7.4",
+    "vue-spinner": "^1.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

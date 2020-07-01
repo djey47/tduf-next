@@ -17,23 +17,27 @@
             <input class="Home__inputBankFile" type="text" placeholder="BNK file path" v-model="inputBankFile" />
             <button v-on:click="fetchBankInfo()">get</button>
         </p>
-        <preformatted language="javascript" :code="formatJson(bankInfo)" />
+        <loader :is-loading="isBankInfoLoading" />
+        <preformatted v-if="isBankInfoLoaded" language="javascript" :code="formatJson(bankInfo)" />
     </section> 
   </div>
 </template>
 
 <script>
 import Preformatted from '../atoms/Preformatted.vue';
+import Loader from '../atoms/Loader.vue';
 import { post } from '../../helpers/rest-client';
 
 export default {
   name: 'Home',
-  components: { Preformatted },
+  components: { Preformatted, Loader },
   props: {
       conf: Object,
   },
     data() {
         return {
+            isBankInfoLoading: false,
+            isBankInfoLoaded: false,
             bankInfo: {},
             inputBankFile: '/home/djey/app/tdu/Euro/Bnk/Database/DB.bnk'
         }
@@ -45,12 +49,18 @@ export default {
             return JSON.stringify(o, null, 2);
         },
         fetchBankInfo() {
+            this.isBankInfoLoaded = false;
+            this.isBankInfoLoading = true;
             const body = {
                 args: {
                     input: this.inputBankFile,
                 },
             };
-            post(`${this.conf.gui.serverUrl}/tools/file/bankinfo`, body, data => this.bankInfo = data);
+            post(`${this.conf.gui.serverUrl}/tools/file/bankinfo`, body, data => {
+                this.isBankInfoLoaded = true;
+                this.isBankInfoLoading = false;
+                this.bankInfo = data;
+            });
         },
         startEditor() {
             const body = {
@@ -65,8 +75,12 @@ export default {
 </script>
 
 <style scoped>
+.Home {
+    padding: 4px 4px;
+}
+
 .Home__section {
-    padding: 0 4px;
+    /* padding: 0 4px; */
     margin-bottom: 32px;
 }
 .Home__title {
