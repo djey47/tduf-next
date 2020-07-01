@@ -3,7 +3,7 @@
     <h1 class="Home__title">Welcome to TDUF.next platform!</h1>
     <section class="Home__section">
         <h3 class="Home__subtitle">Configuration</h3>
-        <preformatted language="json">{{ JSON.stringify(this.conf, null, 1) }}</preformatted>
+        <preformatted language="javascript" :code="formatJson(conf)" />
     </section>
     <section class="Home__section">
         <h3 class="Home__subtitle">TDUF Legacy - Database Editor launcher</h3>
@@ -17,14 +17,14 @@
             <input class="Home__inputBankFile" type="text" placeholder="BNK file path" v-model="inputBankFile" />
             <button v-on:click="fetchBankInfo()">get</button>
         </p>
-        <preformatted language="json">{{ JSON.stringify(this.bankInfo, null, 1) }}</preformatted>
+        <preformatted language="javascript" :code="formatJson(bankInfo)" />
     </section> 
   </div>
 </template>
 
 <script>
-import Preformatted from './atoms/Preformatted.vue';
-import { post } from '../helpers/rest-client';
+import Preformatted from '../atoms/Preformatted.vue';
+import { post } from '../../helpers/rest-client';
 
 export default {
   name: 'Home',
@@ -39,9 +39,11 @@ export default {
         }
     },
     mounted() {
-        this.fetchBankInfo();
     },  
     methods: {
+        formatJson(o) {
+            return JSON.stringify(o, null, 2);
+        },
         fetchBankInfo() {
             const body = {
                 args: {
@@ -56,7 +58,7 @@ export default {
                     input: this.inputBankFile,
                 },
             };
-            post(`${this.conf.gui.server.url}/tools/databaseEditor/start`, body);
+            post(`${this.conf.gui.serverUrl}/tools/databaseEditor/start`, body);
         },
     }  
 }

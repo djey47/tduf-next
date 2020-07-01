@@ -1,23 +1,25 @@
 <template>
-    <pre class="Preformatted"><code :lang="language"><slot>No content</slot></code></pre>    
+    <div class="Preformatted">
+        <vue-code-highlight :language="language">
+            {{ code }}
+        </vue-code-highlight>    
+    </div>
 </template>
 
 <script>
+import { component as VueCodeHighlight } from 'vue-code-highlight';
+import "vue-code-highlight/themes/prism-funky.css";
 export default {
     name: 'Preformatted',
+    components: {
+        VueCodeHighlight,
+    },
     props: {
-        text: String,
         language: String,
+        code: String,
     },
 };
 </script>
 
 <style scoped>
-.Preformatted {
-    text-align: left;
-    background-color: black;
-    color: blanchedalmond;
-    font-family: monospace;
-    font-size: 1.2rem;
-}
 </style>
