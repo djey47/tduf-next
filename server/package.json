@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "env MODE_DEV=true node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "lint": "eslint src",
     "pack:full": "node scripts/package-full.js"
   },
@@ -22,7 +23,9 @@
   "devDependencies": {
     "archiver": "^4.0.1",
     "eslint": "^7.2.0",
+    "eslint-plugin-jest": "^23.17.1",
     "eslint-plugin-node": "^11.1.0",
+    "jest": "^26.1.0",
     "pkg": "^4.4.8",
     "rimraf": "^3.0.2"
   },
