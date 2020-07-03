@@ -1,7 +1,10 @@
 <template>
-  <div id="app" class="App">
+  <div
+    id="app"
+    class="App"
+  >
     <Intro />
-    <Home v-bind:conf="this.conf" />
+    <Home :conf="conf" />
   </div>
 </template>
 
@@ -27,18 +30,19 @@ export default {
     },
     methods: {
         fetchConfig() {
-            get(`${clientConfig.serverUrl}/configuration`, data => {
-                    this.conf = {
-                       ...data,
-                       gui: {
-                           ...data.gui,
-                           ...clientConfig,
-                       },
-                    };
-                });
+            get(`${clientConfig.serverUrl}/configuration`, this.mergeConfig);
+        },
+        mergeConfig(data) {
+            this.conf = {
+                ...data,
+                gui: {
+                    ...data.gui,
+                    ...clientConfig,
+                },
+            };
         },
     },
-}
+};
 </script>
 
 <style>

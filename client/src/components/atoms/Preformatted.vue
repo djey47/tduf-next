@@ -1,9 +1,9 @@
 <template>
-    <div class="Preformatted">
-        <vue-code-highlight :language="language">
-            {{ code }}
-        </vue-code-highlight>    
-    </div>
+  <div class="Preformatted">
+    <vue-code-highlight :language="language">
+      {{ code }}
+    </vue-code-highlight>    
+  </div>
 </template>
 
 <script>
@@ -15,8 +15,14 @@ export default {
         VueCodeHighlight,
     },
     props: {
-        language: String,
-        code: String,
+        language: {
+          type: String,
+          default: '',
+        },
+        code: {
+          type: String,
+          default: 'No content',
+        },
     },
 };
 </script>

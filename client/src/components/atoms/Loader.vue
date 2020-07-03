@@ -1,11 +1,14 @@
 <template>
-    <div class="Loader">
-        <pacman-loader class="Loader__loader" v-if="isLoading" />
-    </div>
+  <div class="Loader">
+    <pacman-loader
+      v-if="isLoading"
+      class="Loader__loader"
+    />
+  </div>
 </template>
 
 <script>
-import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue';
+import { PacmanLoader } from 'vue-spinner/dist/vue-spinner.min';
 export default {
     name: 'Loader',
     components: {

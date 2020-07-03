@@ -3,7 +3,7 @@ function getOptions(method, body) {
         method,
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: body && JSON.stringify(body),
     };

@@ -1,24 +1,48 @@
 <template>
   <div class="Home">
-    <h1 class="Home__title">Welcome to TDUF.next platform!</h1>
+    <h1 class="Home__title">
+      Welcome to TDUF.next platform!
+    </h1>
     <section class="Home__section">
-        <h3 class="Home__subtitle">Configuration</h3>
-        <preformatted language="javascript" :code="formatJson(conf)" />
+      <h3 class="Home__subtitle">
+        Configuration
+      </h3>
+      <preformatted
+        language="javascript"
+        :code="formatJson(conf)"
+      />
     </section>
     <section class="Home__section">
-        <h3 class="Home__subtitle">TDUF Legacy - Database Editor launcher</h3>
-        <p>
-            <button v-on:click="startEditor()">start!</button>
-        </p>
+      <h3 class="Home__subtitle">
+        TDUF Legacy - Database Editor launcher
+      </h3>
+      <p>
+        <button @click="startEditor()">
+          start!
+        </button>
+      </p>
     </section> 
     <section class="Home__section">
-        <h3 class="Home__subtitle">TDUF Legacy - BankInfo sample</h3>
-        <p>
-            <input class="Home__inputBankFile" type="text" placeholder="BNK file path" v-model="inputBankFile" />
-            <button v-on:click="fetchBankInfo()">get</button>
-        </p>
-        <loader :is-loading="isBankInfoLoading" />
-        <preformatted v-if="isBankInfoLoaded" language="javascript" :code="formatJson(bankInfo)" />
+      <h3 class="Home__subtitle">
+        TDUF Legacy - BankInfo sample
+      </h3>
+      <p>
+        <input
+          v-model="inputBankFile"
+          class="Home__inputBankFile"
+          type="text"
+          placeholder="BNK file path"
+        >
+        <button @click="fetchBankInfo()">
+          get
+        </button>
+      </p>
+      <loader :is-loading="isBankInfoLoading" />
+      <preformatted
+        v-if="isBankInfoLoaded"
+        language="javascript"
+        :code="formatJson(bankInfo)"
+      />
     </section> 
   </div>
 </template>
@@ -32,15 +56,18 @@ export default {
   name: 'Home',
   components: { Preformatted, Loader },
   props: {
-      conf: Object,
+      conf: {
+        type: Object,
+        default: () => {},
+      },
   },
     data() {
         return {
             isBankInfoLoading: false,
             isBankInfoLoaded: false,
             bankInfo: {},
-            inputBankFile: '/home/djey/app/tdu/Euro/Bnk/Database/DB.bnk'
-        }
+            inputBankFile: '/home/djey/app/tdu/Euro/Bnk/Database/DB.bnk',
+        };
     },
     mounted() {
     },  
@@ -70,8 +97,8 @@ export default {
             };
             post(`${this.conf.gui.serverUrl}/tools/databaseEditor/start`, body);
         },
-    }  
-}
+    },  
+};
 </script>
 
 <style scoped>

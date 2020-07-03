@@ -10,4 +10,4 @@ function start(args) {
 
 module.exports = {
     start,
-}
+};

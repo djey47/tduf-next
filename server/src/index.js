@@ -1,6 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser')
-const cors = require('cors')
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const path = require('path');
 const opn = require('opn');
 const appRootDir = require('app-root-dir').get();
@@ -18,7 +18,7 @@ function main(args) {
     console.info('(ℹ️)',{ args });
 
     if (process.env.MODE_DEV) {
-      console.info('(ℹ️) DEV mode enabled!', );
+      console.info('(ℹ️) DEV mode enabled!');
     }
 
     console.info('(ℹ️) Loaded config',{ serverConfig });
@@ -57,7 +57,7 @@ function main(args) {
         res.send({
           errors: [
             `Category - Operation combination not found: ${params.category} - ${params.operation}`,
-          ]
+          ],
         });
       } else {
         try {

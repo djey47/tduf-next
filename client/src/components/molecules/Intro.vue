@@ -1,8 +1,12 @@
 <template>
-    <p class="Intro">
-      <img class="Intro__logo" alt="Vue logo" src="../../assets/logo.png">
-      <span class="Intro__title">TDUF.next</span>
-    </p>    
+  <p class="Intro">
+    <img
+      class="Intro__logo"
+      alt="Vue logo"
+      src="../../assets/logo.png"
+    >
+    <span class="Intro__title">TDUF.next</span>
+  </p>    
 </template>
 
 <script>
