@@ -9,9 +9,20 @@ const {
 module.exports = {
     extends: [
         ...commonExtends,
-        "plugin:vue/recommended",
+        'plugin:vue/recommended',
+    ],
+    overrides: [
+        {
+          files: [
+            '**/tests/unit/**/*.spec.js',
+          ],
+          env: {
+            jest: true
+          }
+        }
     ],
     parserOptions: {
+        parser: 'babel-eslint',        
         ecmaFeatures: {
             ...commonEcmaFeatures,
         },
@@ -24,6 +35,7 @@ module.exports = {
         ...commonEnv,
         node: true,
     },
+    root: true,
     rules: {
         ...commonRules,
     },
