@@ -8,8 +8,7 @@ const { info, error } = require('../../helpers/console');
 function invoke(tool, commandArgs) {
 
     // Depend on OS (sh/cmd)
-    // TODO Windows support
-    const scriptExtension = 'sh';
+    const scriptExtension = process.platform === 'win32' ? 'cmd' : 'sh';
     const toolName = `${tool}.${scriptExtension}`;
     const tdufExecutable = path.resolve(serverConfig.tduf.path, toolName);
     const command = `${tdufExecutable} ${commandArgs}`;
