@@ -16,6 +16,7 @@ module.exports = {
     plugins: [ 'jest' ],
     rules: {
         'comma-dangle': ['error', 'always-multiline'],
+        'no-console': 'warn',
         semi: ['error', 'always'],
     },
 };
