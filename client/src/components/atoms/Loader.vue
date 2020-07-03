@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { PacmanLoader } from 'vue-spinner/dist/vue-spinner.min';
+import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue';
 export default {
     name: 'Loader',
     components: {

@@ -7,4 +7,6 @@ module.exports = {
     transform: {
         "\\.yaml$": 'yaml-jest',
     },
+    // Let babel transpile node_modules (required for vue-spinner)
+    transformIgnorePatterns: [],
 };
