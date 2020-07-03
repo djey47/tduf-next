@@ -44,11 +44,17 @@ function main(args) {
       info(':dark_sunglasses:  Call with', { path, params });
       res.send(serverConfig);  
     });
+
+    app.post('/stop', () => {
+      info(':skull_and_crossbones:  Graceful server termination requested!');
+      // eslint-disable-next-line no-process-exit
+      process.exit(0);
+    });
     
     app.post('/tools/:category/:operation', (req, res) => {
       res.contentType('application/json');
 
-      const { path,  params, body } = req;
+      const { path, params, body } = req;
 
       info(':dark_sunglasses:  Call with', { path, params, body });
 
@@ -81,10 +87,12 @@ function main(args) {
     
     const port = serverConfig.server.port || 2020;
     app.listen(port, () => {
-      info(':rocket: Server listening', { port });
+      const guiUrl = `http://localhost:${port}/`;
+      info(':rocket: Server listening', { guiUrl });
+      info(':keyboard:  CTRL+C will terminate server');
 
       if (serverConfig.gui.open === true) {
-        opn(`http://localhost:${port}/`);
+        opn(guiUrl);
       }
 
     });    
