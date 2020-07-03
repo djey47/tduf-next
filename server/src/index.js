@@ -7,6 +7,7 @@ const appRootDir = require('app-root-dir').get();
 const packageInfo = require(path.join(appRootDir, 'package.json'));
 const serverConfig = require('./config').get();
 const operations = require('./ops/operations');
+const { info } = require('./helpers/console');
 
 function main(args) {
     // TODO Logging mechanism: winston?
@@ -14,14 +15,13 @@ function main(args) {
     // Java fix
     process.env.PATH = `${process.env.PATH}:${serverConfig.java.jrePath}`;
 
-    console.info('(ℹ️) TDUF.next server', packageInfo.version);
-    console.info('(ℹ️)',{ args });
+    info('TDUF.next server', packageInfo.version, { args });
 
     if (process.env.MODE_DEV) {
-      console.info('(ℹ️) DEV mode enabled!');
+      info(':sleuth_or_spy: DEV mode enabled!');
     }
 
-    console.info('(ℹ️) Loaded config',{ serverConfig });
+    info(':gear:  Loaded',{ serverConfig });
 
     const app = express();
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,7 +33,7 @@ function main(args) {
 
     app.get('/tools/:category/:operation', (req, res) => {
       const { path,  params } = req;
-      console.log('(ℹ️) Call with', { path, params });
+      info(':dark_sunglasses:  Call with', { path, params });
       res.send(`${params.category} - ${params.operation}`);  
     });    
     
@@ -41,7 +41,7 @@ function main(args) {
       res.contentType('application/json');
       
       const { path,  params } = req;
-      console.log('(ℹ️) Call with', { path, params });
+      info(':dark_sunglasses:  Call with', { path, params });
       res.send(serverConfig);  
     });
     
@@ -50,7 +50,7 @@ function main(args) {
 
       const { path,  params, body } = req;
 
-      console.log('(ℹ️) Call with', { path, params, body });
+      info(':dark_sunglasses:  Call with', { path, params, body });
 
       if (!operations[params.category] || !operations[params.category][params.operation]) {
         res.statusCode = 404;
@@ -81,7 +81,7 @@ function main(args) {
     
     const port = serverConfig.server.port || 2020;
     app.listen(port, () => {
-      console.log('(ℹ️) 🚀 Server listening', { port });
+      info(':rocket: Server listening', { port });
 
       if (serverConfig.gui.open === true) {
         opn(`http://localhost:${port}/`);
