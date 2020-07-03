@@ -31,4 +31,4 @@ function clearRadial() {
 module.exports = {
     clearRadial,
     start,
-}
+};
