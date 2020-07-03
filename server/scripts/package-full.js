@@ -11,20 +11,22 @@ const { info, error } = require('../src/helpers/console');
 
 async function zip(platform, packPath) {
     return new Promise((resolve, reject) => {
-        const targetExecutable = 'tduf.next';
         const releasePath = path.resolve(appRootDir, '../releases');
         const zipSettings = {
             linux: {
                 osLabel: ':penguin: Linux',
-                executable: 'index-linux',
+                sourceExecutable: 'index-linux',
+                targetExecutable: 'tduf.next',
             },
             macos: {
                 osLabel: ':apple: Mac OS',
-                executable: 'index-macos',
+                sourceExecutable: 'index-macos',
+                targetExecutable: 'tduf.next',                
             },
             windows: {
                 osLabel: '🏳️  Windows',
-                executable: 'index-win.exe',
+                sourceExecutable: 'index-win.exe',
+                targetExecutable: 'tduf.next.exe',                
             },
         };
         const currentSettings = zipSettings[platform];
@@ -37,8 +39,8 @@ async function zip(platform, packPath) {
             fs.mkdirSync(releasePath);
         }  
 
-        const { executable, osLabel } = currentSettings;
-        const sourceExecutablePath = path.join(packPath, executable);
+        const { sourceExecutable, osLabel, targetExecutable } = currentSettings;
+        const sourceExecutablePath = path.join(packPath, sourceExecutable);
 
         const releaseArchivePath = path.join(releasePath, `tduf-next-${packageInfo.version}-${platform}64.zip`);
         info(`:package: Zipping release (${osLabel})...`, { releaseArchivePath });
@@ -59,7 +61,7 @@ async function zip(platform, packPath) {
                  platform,
                  releaseArchivePath,
                  totalBytes: releaseArchive.pointer(),
-                 executable,
+                 targetExecutable,
              });
             resolve();
         });
