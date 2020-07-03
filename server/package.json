@@ -15,8 +15,10 @@
   "dependencies": {
     "app-root-dir": "^1.0.2",
     "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "node-emoji": "^1.10.0",
     "opn": "^6.0.0",
     "yaml": "^1.10.0"
   },
