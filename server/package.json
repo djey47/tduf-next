@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "env MODE_DEV=true node src/index.js",
+    "start:all": "npm start & cd ../client && npm run serve &",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "eslint src",
