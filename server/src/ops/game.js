@@ -2,7 +2,7 @@
 
 const path = require('path');
 const childProcess = require('child_process');
-const serverConfig = require('../config').get();
+const serverConfig = require('../helpers/config').get();
 const { info, error } = require('../helpers/console');
 
 function start(args) {

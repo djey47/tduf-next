@@ -1,20 +1,17 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const path = require('path');
 const opn = require('opn');
 const appRootDir = require('app-root-dir').get();
 const packageInfo = require(path.join(appRootDir, 'package.json'));
-const serverConfig = require('./config').get();
-const operations = require('./ops/operations');
+const serverConfig = require('./helpers/config').get();
+const { init: initServices } = require('./services/common');
+const initCoreServices = require('./services/core');
+const initToolsServices = require('./services/tools');
 const { info } = require('./helpers/console');
 
+const WEBAPP_PATH = '/';
+
 function main(args) {
-    // TODO Logging mechanism: winston?
-
-    // Java fix
-    process.env.PATH = `${process.env.PATH}:${serverConfig.java.jrePath}`;
-
     info('TDUF.next server', packageInfo.version, { args });
 
     if (process.env.MODE_DEV) {
@@ -24,67 +21,19 @@ function main(args) {
     info(':gear:  Loaded',{ serverConfig });
 
     const app = express();
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json());
-    app.use(cors());
+  
+    // Webapp: this will enable you to serve files to /
+    app.use(WEBAPP_PATH, express.static(
+      path.resolve(appRootDir, serverConfig.gui.relativePath),
+      { index: "index.html" },
+    ));
 
-    //This will enable you to serve files to /tools
-    app.use('/', express.static(path.resolve(appRootDir, serverConfig.gui.relativePath), { index: "index.html" }));
+    // Services
+    initServices(app);
+    initCoreServices(app, serverConfig);
+    initToolsServices(app, serverConfig);
 
-    app.get('/tools/:category/:operation', (req, res) => {
-      const { path,  params } = req;
-      info(':dark_sunglasses:  Call with', { path, params });
-      res.send(`${params.category} - ${params.operation}`);  
-    });    
-    
-    app.get('/configuration', (req, res) => {
-      res.contentType('application/json');
-      
-      const { path,  params } = req;
-      info(':dark_sunglasses:  Call with', { path, params });
-      res.send(serverConfig);  
-    });
-
-    app.post('/stop', () => {
-      info(':skull_and_crossbones:  Graceful server termination requested!');
-      // eslint-disable-next-line no-process-exit
-      process.exit(0);
-    });
-    
-    app.post('/tools/:category/:operation', (req, res) => {
-      res.contentType('application/json');
-
-      const { path, params, body } = req;
-
-      info(':dark_sunglasses:  Call with', { path, params, body });
-
-      if (!operations[params.category] || !operations[params.category][params.operation]) {
-        res.statusCode = 404;
-        res.send({
-          errors: [
-            `Category - Operation combination not found: ${params.category} - ${params.operation}`,
-          ],
-        });
-      } else {
-        try {
-          const op = operations[params.category][params.operation];
-          const result = op(body.args);
-    
-          res.statusCode = 200;
-          res.send({
-            result,
-            errors: [],
-          });
-
-        } catch (error) {
-          res.statusCode = 400;
-          res.send({
-            errors: [ error.stderr.toString() ],
-          });
-        }  
-      }
-    });
-    
+    // Server starter
     const port = serverConfig.server.port || 2020;
     app.listen(port, () => {
       const guiUrl = `http://localhost:${port}/`;

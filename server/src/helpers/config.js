@@ -1,3 +1,5 @@
+/** Configuration handler */
+
 const fs = require('fs');
 const yaml = require('yaml');
 const path = require('path');
