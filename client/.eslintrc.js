@@ -11,16 +11,6 @@ module.exports = {
         ...commonExtends,
         'plugin:vue/recommended',
     ],
-    overrides: [
-        {
-          files: [
-            '**/tests/unit/**/*.spec.js',
-          ],
-          env: {
-            jest: true
-          }
-        }
-    ],
     parserOptions: {
         parser: 'babel-eslint',        
         ecmaFeatures: {
@@ -33,7 +23,6 @@ module.exports = {
     ],
     env: {
         ...commonEnv,
-        node: true,
     },
     root: true,
     rules: {

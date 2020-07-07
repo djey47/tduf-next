@@ -20,7 +20,6 @@ module.exports = {
     },
     env: {
         ...commonEnv,
-        es6: true,
     },
     "rules": {
         ...commonRules,
