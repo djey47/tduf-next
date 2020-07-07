@@ -82,3 +82,22 @@ npm run lint
 
 #### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## Configuration
+
+### Server
+
+- Embedded in pkg snapshot: `config/tduf-next.server.config`
+- Overridable with
+    - `<root-dir>/server/config/tduf-next.server.config` (DEV)
+    - `~/.tduf-next/tduf-next.server.local.config.yaml` (PROD).
+
+### Client
+
+That is consolidated server+gui configuration.
+
+- Provided by server, calling `/config` endpoint
+- Overridable with
+    - `<root-dir>/client/src/config/tduf-next.client.config` (DEV)
+    - `~/.tduf-next/tduf-next.server.local.config.yaml` (PROD).
