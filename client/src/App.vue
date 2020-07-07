@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         fetchConfig() {
-            get(`${clientConfig.serverUrl}/configuration`, this.mergeConfig);
+            get(`${clientConfig.serverUrl}/config`, this.mergeConfig);
         },
         mergeConfig(data) {
             this.conf = {
