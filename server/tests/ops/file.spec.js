@@ -1,8 +1,8 @@
 
-const gatewayMock = require('./gateway/tduf-legacy'); 
-const { bankinfo } = require('./file');
+const gatewayMock = require('../../src/ops/gateway/tduf-legacy'); 
+const { bankinfo } = require('../../src/ops/file');
 
-jest.mock('./gateway/tduf-legacy');
+jest.mock('../../src/ops/gateway/tduf-legacy');
 
 describe('file operations', () => {
     beforeEach(() => {
