@@ -4,10 +4,6 @@ This section hosts all notes taken while attempting to reverse engineer TDU file
 
 You'll also find file format structures in various forms, mostly under Kaitai Struct YAML (.ksy files).
 
-* [[Spots / POI: SPT|Reverse-Engineering-Spots]]
-* [[Graphics: 2DM|Reverse-Engineering-2DM]]
-* [[Useful info and resources|TDU-Useful-Resources]]
-
 # App development ideas (obsolete)
 
 * Converter: TDUF structure file (*.map.json) to HexWorkshop structure definition (in library.hsl) => see http://www.hexworkshop.com/onlinehelp/600/html/idhelp_structure_libraries.htm
