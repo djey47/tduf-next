@@ -1,0 +1,69 @@
+Set FULLNAME string ""
+Set NAME string ""
+Log MEMORY_FILE 0 0
+PutVarChr MEMORY_FILE 0 4 long
+GetDString DUMMY 8
+GetDString ID 4
+If ID != "KNAB"
+  CleanExit
+EndIf
+GoTo 0x28
+Get NUMFILES long
+Get DUMMY long
+Get FATOFFSET long
+Math FATOFFSET += 8
+Get DUMMY long
+Get NAMESOFFSET long
+Math NAMESOFFSET += 8
+Get FILESORDER long
+Math FILESORDER += 8
+PutVarChr MEMORY_FILE 0 FILESORDER long
+GoTo NAMESOFFSET
+If NUMFILES != 0
+  CallFunction Parser
+EndIf
+
+StartFunction Parser
+  Get NAMESZ byte
+  If NAMESZ > 0x7F
+    String FULLNAME += NAME
+    String FULLNAME += \
+    Get FOLDERS byte
+	If FOLDERS > 0x7F
+	  Get TMP byte
+	  Math TMP < 7
+	  Math FOLDERS & 0x0000007F
+	  Math FOLDERS | TMP
+#	  Print %FOLDERS%
+	EndIf
+    Math NAMESZ ^= 0xFF
+    Math NAMESZ += 1
+    GetDString NAME NAMESZ
+    For I = 0 < FOLDERS
+      CallFunction Parser
+    Next I
+  Else
+    GetDString BASENAME NAMESZ
+    String FULLNAME += BASENAME
+    String FULLNAME += NAME
+#   Print %FULLNAME%
+	SavePos NAMESOFFSET
+	GetVarChr FILESORDER MEMORY_FILE 0 long
+	GoTo FILESORDER
+	If NUMFILES > 0x100
+	  Get FILENUMBER word
+	Else
+	  Get FILENUMBER byte
+	EndIf
+	SavePos FILESORDER
+	PutVarChr MEMORY_FILE 0 FILESORDER long
+	Math FILENUMBER *= 0x14
+	Math FATOFFSET += FILENUMBER
+	GoTo FATOFFSET
+	Get OFFSET long
+	Get SIZE long
+	GetDString DUMMY 12
+    Log FULLNAME OFFSET SIZE
+	GoTo NAMESOFFSET
+  EndIf
+EndFunction Parser
