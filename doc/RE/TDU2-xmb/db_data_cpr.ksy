@@ -7,39 +7,58 @@ seq:
     type: str
     size: 8
     encoding: "ascii"
-  - id: unk1
+  - id: section1_addr
     type: u4
   - id: section2_addr
     type: u4
-  - id: section2_len
+  - id: string_offset
     type: u4
   - id: unk2
     size: 8
-  - id: column_names
-    type: name_list
+  - id: nodes_section
+    type: node_list
   - id: data
-    size: 905924
-  - id: resources
+    size: 905922
+  - id: strings
     type: string_list
   - id: rest
     size-eos: true
 types:
-  name_list:
+  node_list:
     seq:
-      - id: name
+      - id: nodes
         type: strz
-        # size: 8
         encoding: "ascii"
         repeat: expr
         repeat-expr: 645
+      - id: padding
+        size: 5
   string_list:
     seq:
       - id: name
         type: strz
         encoding: "UTF-8"
         repeat: eos
-instances:
   section2:
-    size: section2_len
-    # size-eos: true
+    seq:
+      - id: unk1
+        size: 8
+      - id: structure
+        repeat: expr
+        repeat-expr: 736
+        type: structure_entry
+      - id: unk2
+        size: 8
+  structure_entry:
+    seq:
+      - id: v1
+        type: u4
+      - id: v2
+        type: u4
+instances:
+  section1:
+    pos: section1_addr
+    type: node_list
+  section2:
     pos: section2_addr
+    type: section2
