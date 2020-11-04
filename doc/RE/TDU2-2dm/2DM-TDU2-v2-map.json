@@ -1,0 +1,433 @@
+{
+  "name": "TDU2 Materials definition for 3D modeling (alpha)",
+  "fileName": "*.2dm",
+  "littleEndian": true,
+  "fields": [
+    {
+      "name": "magic",
+      "type": "CONSTANT",
+      "constantValue": "0x[04 00 00 00 00 00 00 00]"
+    },
+    {
+      "name": "fileSizeBytes",
+      "type": "INTEGER",
+      "size": 4
+    },
+    {
+      "name": "fileExtension",
+      "type": "TEXT",
+      "size": 4
+    },
+    {
+      "name": "layersSectionTag",
+      "type": "TEXT",
+      "size": 8
+    },
+    {
+      "name": "layersSectionSizeBytes",
+      "type": "INTEGER",
+      "size": 4
+    },
+    {
+      "name": "layersSectionMagic",
+      "type": "CONSTANT",
+      "constantValue": "0x[10 00 00 00]"
+    },
+    {
+      "name": "layerGroups",
+      "type": "REPEATER",
+      "size": "=(?layersSectionSizeBytes?-16)/288",
+      "isLinkTarget": true,
+      "subFields": [{
+          "name": "layerGroupTag",
+          "type": "TEXT",
+          "size": 8
+        },
+        {
+          "name": "layerGroupSize1Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "layerGroupSize2Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "layerGroupZero",
+          "type": "UNKNOWN",
+          "size": 12
+        },
+        {
+          "name": "layersCount",
+          "type": "INTEGER",
+          "size": 2
+        },
+        {
+          "name": "layerGroupMagic2",
+          "type": "UNKNOWN",
+          "size": 2
+        },
+        {
+          "name": "layers",
+          "type": "REPEATER",
+          "size": 8,
+          "subFields": [{
+              "name": "layerName",
+              "type": "TEXT",
+              "size": 8
+            },
+            {
+              "name": "textureFile",
+              "type": "TEXT",
+              "size": 8
+            }, {
+              "name": "zero",
+              "type": "GAP",
+              "size": 8
+            }, {
+              "name": "layerFlag1",
+              "type": "INTEGER",
+              "size": 1
+            }, {
+              "name": "layerFlag2",
+              "type": "INTEGER",
+              "size": 1
+            }, {
+              "name": "layerFlag3",
+              "type": "INTEGER",
+              "size": 1
+            }, {
+              "name": "layerFlag4",
+              "type": "INTEGER",
+              "size": 1
+            }, {
+              "name": "layerAnimSettingsAddress",
+              "type": "INTEGER",
+              "size": 4,
+              "isLinkSource": true
+            }]
+        }]
+    },
+    {
+      "name": "paramsSectionTag",
+      "type": "TEXT",
+      "size": 8
+    },
+    {
+      "name": "paramsSectionSizeBytes",
+      "type": "INTEGER",
+      "size": 4
+    },
+    {
+      "name": "paramsSectionMagic",
+      "type": "CONSTANT",
+      "constantValue": "0x[10 00 00 00]"
+    },
+    {
+      "name": "params",
+      "type": "REPEATER",
+      "contentsSize": "=?paramsSectionSizeBytes?-16",
+      "isLinkTarget": true,
+      "subFields": [{
+          "name": "paramTag",
+          "type": "TEXT",
+          "size": 8
+        },
+        {
+          "name": "itemSize1Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "itemSize2Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "shaderConfiguration",
+          "type": "UNKNOWN",
+          "size": 64,
+          "comment": "See TDUWE::MaterialPieces.cs for shader reference"
+        },
+        {
+          "name": "subsettingsCount",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "layerGroupAddress",
+          "type": "INTEGER",
+          "size": 4,
+          "isLinkSource": true
+        },
+        {
+          "name": "unk",
+          "type": "UNKNOWN",
+          "size": 8
+        },
+        {
+          "name": "settings",
+          "type": "REPEATER",
+          "size": "=?subsettingsCount?",
+          "subFields": [
+            {
+              "name": "subId",
+              "type": "INTEGER",
+              "size": 4
+            },
+            {
+              "name": "unk1",
+              "type": "INTEGER",
+              "size": 4
+            },
+            {
+              "name": "unk2",
+              "type": "INTEGER",
+              "size": 4
+            },
+            {
+              "name": "unk3",
+              "type": "INTEGER",
+              "size": 4
+          }]
+        },
+        {
+          "name": "reflectionLayerScale1",
+          "type": "FPOINT",
+          "size": 4,
+          "condition": "?subsettingsCount? > 0"
+        },
+        {
+          "name": "reflectionLayerScale2",
+          "comment": "only when subsettings count > 0",
+          "type": "FPOINT",
+          "size": 4,
+          "condition": "?subsettingsCount? > 0"
+        },
+        {
+          "name": "rest",
+          "comment": "only when subsettings count > 0",
+          "type": "UNKNOWN",
+          "size": "=?itemSize1Bytes? - 104 - ?subsettingsCount? * 16",
+          "condition": "?subsettingsCount? > 0"
+        }]
+    },
+    {
+      "name": "materialsSectionTag",
+      "type": "TEXT",
+      "size": 8
+    },
+    {
+      "name": "materialsSectionSizeBytes",
+      "type": "INTEGER",
+      "size": 4
+    },
+    {
+      "name": "materialsSectionMagic",
+      "type": "CONSTANT",
+      "constantValue": "0x[10 00 00 00]"
+    },
+    {
+      "name": "materialsHashesTag",
+      "type": "TEXT",
+      "size": 8
+    },
+    {
+      "name": "materialsHashesSize1Bytes",
+      "type": "INTEGER",
+      "size": 4
+    },
+    {
+      "name": "materialsHashesSize2Bytes",
+      "type": "INTEGER",
+      "size": 4
+    },
+    {
+      "name": "hashes",
+      "type": "REPEATER",
+      "size": "=(?materialsHashesSize1Bytes?-16)/16",
+      "subFields": [
+        {
+          "name": "h",
+          "type": "TEXT",
+          "size": 8
+        },
+        {
+          "name": "materialAddress",
+          "type": "INTEGER",
+          "size": 4,
+          "isLinkSource": true
+        },
+        {
+          "name": "zero",
+          "type": "GAP",
+          "size": 4
+        }]
+    },
+    {
+      "name": "defs",
+      "type": "REPEATER",
+      "size": "=(?materialsHashesSize1Bytes?-16)/16",
+      "isLinkTarget": true,
+      "subFields": [
+        {
+          "name": "materialsDefsTag",
+          "type": "TEXT",
+          "size": 8
+        },
+        {
+          "name": "materialsDefsSize1Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "materialsDefsSize2Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "unk1",
+          "type": "UNKNOWN",
+          "size": 23
+        },
+        {
+          "name": "alpha",
+          "type": "INTEGER",
+          "size": 1
+        },
+        {
+          "name": "alphaBlend1",
+          "type": "INTEGER",
+          "size": 1
+        },
+        {
+          "name": "alphaBlend2",
+          "type": "INTEGER",
+          "size": 1
+        },
+        {
+          "name": "unk2",
+          "type": "UNKNOWN",
+          "size": 118
+        },
+        {
+          "name": "ambientColorR",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "ambientColorG",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "ambientColorB",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "ambientColorO",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "diffuseColorR",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "diffuseColorG",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "diffuseColorB",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "diffuseColorO",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "specularColorR",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "specularColorG",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "specularColorB",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "specularColorO",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "otherColorR",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "otherColorG",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "otherColorB",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "otherColorO",
+          "type": "FPOINT",
+          "size": 4
+        },
+        {
+          "name": "parameterAddress",
+          "type": "INTEGER",
+          "size": 4,
+          "isLinkSource": true
+        },
+        {
+          "name": "rest",
+          "type": "GAP",
+          "size": 12
+        }]
+    },
+    {
+      "name": "additionalSection",
+      "comment": "Fixed to 3 items for now...",
+      "type": "REPEATER",
+      "size": 3,
+      "subFields": [{
+          "name": "entryTag",
+          "type": "TEXT",
+          "size": 8
+        },
+        {
+          "name": "entrySize1Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "entrySize2Bytes",
+          "type": "INTEGER",
+          "size": 4
+        },
+        {
+          "name": "rest",
+          "type": "UNKNOWN",
+          "size": "=?entrySize1Bytes? - 16"
+        }]
+    }
+  ]
+}
