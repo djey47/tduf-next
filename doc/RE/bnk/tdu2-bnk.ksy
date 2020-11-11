@@ -1,8 +1,7 @@
 meta:
-  id: eden_tdu2_bnk
+  id: tdu2_bnk
   file-extension: bnk
   endian: le
-
 seq:
   - id: header
     type: header_section
@@ -35,6 +34,26 @@ types:
       - id: data
         type: tree_data
         size: common.length
+  order_section:
+    seq:
+      - id: common
+        type: common_data
+      - id: data
+        type: order_data
+        size: common.length
+  magic_section:
+    seq:
+      - id: common
+        type: common_data
+      - id: data
+        type: magic_data
+        size: common.length
+  packed_section:
+    seq:
+      - id: packed_entries
+        type: packed_entry(_index)
+        repeat: expr
+        repeat-expr: _root.header.data.packed_count
   header_data:
     seq:
       - id: tag
@@ -84,11 +103,20 @@ types:
       - id: tree_entries
         type: tree_entry
         repeat: eos
+  order_data:
+    seq:
+      - id: order_entries
+        type: order_entry
+        repeat: eos
   common_data:
     seq:
       - id: length
         type: u4
       - id: checksum
+        type: u4
+  magic_data:
+    seq:
+      - id: unk
         type: u4
   size_entry:
     seq:
@@ -125,6 +153,19 @@ types:
         encoding: ascii
         size: name_size
         if: name_size >= 0
+  order_entry:
+    seq:
+      - id: tree_file_index
+        type: u1
+  packed_entry:
+    params:
+      - id: file_index
+        type: u4
+    instances:
+      file:
+        pos: _root.size_section_instance.data.size_entries[file_index].address
+        size: _root.size_section_instance.data.size_entries[file_index].size
+        
       
 instances:
   size_section_instance:
@@ -136,6 +177,17 @@ instances:
   tree_section_instance:
     pos: header.data.tree_section_addr
     type: tree_section
+  order_section_instance:
+    pos: header.data.order_section_addr
+    type: order_section
+  magic_section_instance:
+    if: header.data.magic_section_addr > 0
+    pos: header.data.magic_section_addr
+    type: magic_section
+  packed_section_instance:
+    pos: header.data.packed_section_addr
+    type: packed_section
+    
 enums:
   file_type:
     0x0: scene_3dd
