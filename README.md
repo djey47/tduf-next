@@ -23,6 +23,8 @@ Now, current TDUF toolset has become old enough and begin to suffer from its fla
 ## repository structure
 - `doc`: support documentation
   - `RE`: reverse engineering TDU files
+- `tools`: misc tooling demonstrating above RE findings
+  - `kaitai-parser`: simple parser scripts using Kaitai Struct defs.
   
 ## architecture details
 For this, head to repository WIKI.
