@@ -1,0 +1,12 @@
+currentGame: tdu2
+games:
+  tdu:
+    rootDirectory: "/home/foo/app/tdu"
+    parsers:
+  tdu2:
+    rootDirectory: "/home/foo/app/tdu2"
+    parsers:
+      bnk: Tdu2Bnk
+      cpr: Tdu2Xmb
+      cpr.dec: Tdu2Xmb
+      xmb: Tdu2Xmb

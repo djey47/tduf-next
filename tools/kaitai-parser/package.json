@@ -4,11 +4,15 @@
   "description": "",
   "main": "parser.js",
   "scripts": {
+    "start": "node ./parser.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "djey",
   "license": "ISC",
   "dependencies": {
-    "kaitai-struct": "^0.9.0"
+    "app-root-dir": "^1.0.2",
+    "deepmerge": "^4.2.2",
+    "kaitai-struct": "^0.9.0",
+    "yaml": "^1.10.0"
   }
 }
