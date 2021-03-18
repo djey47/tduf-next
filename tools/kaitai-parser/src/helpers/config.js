@@ -17,7 +17,7 @@ function loadSingle(configFileName) {
     const configFilePath = Path.join(appRootDir, 'config', configFileName);
     if (fs.existsSync(configFilePath)) {
         const configString = fs.readFileSync(configFilePath, "utf8");
-        // console.log({ configString });
+        console.log({ configString });
         return YAML.parse(configString); 
     } 
 
