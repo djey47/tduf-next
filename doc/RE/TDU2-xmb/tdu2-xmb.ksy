@@ -3,93 +3,97 @@ meta:
   file-extension: xmb,cpr
   endian: le
 seq:
-  - id: magic
+  - id: tag
     type: str
-    size: 8
+    size: 4
     encoding: "ascii"
+  - id: version
+    type: u4
   - id: descriptor_table_addr
     type: u4
-  - id: data_start_addr
+  - id: metadata_addr
     type: u4
-  - id: data_real_addr
+  - id: subobject_table_addr
     type: u4
-  - id: key_addr
+  - id: key_offset
     type: u4
-  - id: data_start_real_addr
+  - id: number_of_types
     type: u4
-  - id: nodes_section
-    type: node_list
-  - id: data
-    size: 905922
-  - id: strings
-    type: string_list
   - id: rest
     size-eos: true
 types:
-  node_list:
+  name_list:
     seq:
-      - id: nodes
+      - id: names
         type: strz
         encoding: "ascii"
-        repeat: expr
-        repeat-expr: 645
-      - id: padding
-        size: 5
-  data_list:
+        repeat: until
+        repeat-until: _ == 'AA'
+  metadata:
     seq:
-      - id: raw_count
+      - id: zero
         type: u4
-      - id: unk
-        type: u4
-      - id: data_items
-        type: data_item
+      - id: type_defs
+        type: type_def
         repeat: expr
-        repeat-expr: data_count
+        repeat-expr: _parent.number_of_types
     instances:
-      data_count:
-        value: (raw_count >> 4) & 0x7FF
-  data_item:
+      key_defs:
+        pos: _parent.number_of_types * 4
+        type: key_defs
+  type_def:
     seq:
-      - id: rel_data_item_addr
+      - id: type_id
+        type: u1
+      - id: type_size
+        type: u2
+      - id: padding
+        type: u1
+      - id: rest
+        size: 4
+  key_defs:
+    seq:
+       - id: header
+         type: key_def_header
+       - id: keys
+         type: key_def
+         repeat: expr
+         repeat-expr: header.number_of_keys
+  key_def_header:
+    seq:
+      - id: raw_key_info
         type: u4
       - id: unknown
         type: u4
     instances:
-      abs_data_item_addr:
-        value: rel_data_item_addr + _root.descriptor_table_addr
-      name:
-        pos: abs_data_item_addr
-        type: strz
-        encoding: "ascii"
-  string_list:
+      number_of_keys:
+        value: raw_key_info >> 4 & 0x7FF
+  key_def:
     seq:
-      - id: name
-        type: strz
-        encoding: "UTF-8"
-        repeat: eos
-  structure_def:
-    seq:
-      - id: unk1
-        size: 8
-      - id: structure
-        repeat: expr
-        repeat-expr: 736
-        type: structure_entry
-      - id: unk2
-        size: 8
-  structure_entry:
-    seq:
-      - id: v1
+      - id: name_string_offset
         type: u4
-      - id: v2
-        type: u4
+      - id: type_offset
+        type: u1
+      - id: padding
+        type: u2
+      - id: array_marker
+        type: u1
+    instances:
+      key_name_abs_addr:
+        value: _root.descriptor_table_addr + name_string_offset
+      # key_name:
+      #   pos: _root.descriptor_table_addr + name_string_offset
+      #   type: str
+      #   size: 4
+      #   encoding: 'ascii'
 instances:
-  node_section:
+  descriptor_table_section:
     pos: descriptor_table_addr
-    type: node_list
-  # structure_section:
-  #   pos: structure_section_addr
-  #   type: structure_def
+    type: name_list
+  metadata_section:
+    pos: metadata_addr
+    type: metadata
+    size-eos: true
   data_section:
-    pos: data_start_addr + data_start_real_addr * 4
-    type: data_list
+    pos: subobject_table_addr
+    size-eos: true
