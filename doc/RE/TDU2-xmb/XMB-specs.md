@@ -46,7 +46,13 @@ This section hosts many categories, in following order:
 
 **All type definitions**
 
-Relying on 4 bytes per type
+Relying on 8 bytes per type
+- 4 first bytes are the packed type (warning, weird layout down here!) :
+    - internal length is a byte at b32..b16 position
+        This value is not used by reader anyway
+    - type id is a byte at b7..b0 position
+        - See type definitions in appendix below
+- 4 following bytes are the offset to read the value in Descriptor table above
 
 TODO
 
@@ -74,7 +80,7 @@ TODO
 
 ### Commonly used types
 
-With Min and max values when applicable:
+(type id) With Min and max values when applicable:
 
 - (0) OBJECT
 - (1) BOOL: 1 bit (0..1)

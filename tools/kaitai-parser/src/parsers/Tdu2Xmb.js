@@ -10,6 +10,38 @@
   }
 }(this, function (KaitaiStream) {
 var Tdu2Xmb = (function() {
+  Tdu2Xmb.DataType = Object.freeze({
+    OBJECT: 0,
+    BOOL: 1,
+    S_INT_8: 2,
+    S_INT_16: 3,
+    S_INT_32: 4,
+    S_INT_64: 5,
+    U_INT_8: 6,
+    U_INT_16: 7,
+    U_INT_32: 8,
+    U_INT_64: 9,
+    FLOAT: 10,
+    DOUBLE: 11,
+    STRING: 12,
+    ARRAY: 13,
+
+    0: "OBJECT",
+    1: "BOOL",
+    2: "S_INT_8",
+    3: "S_INT_16",
+    4: "S_INT_32",
+    5: "S_INT_64",
+    6: "U_INT_8",
+    7: "U_INT_16",
+    8: "U_INT_32",
+    9: "U_INT_64",
+    10: "FLOAT",
+    11: "DOUBLE",
+    12: "STRING",
+    13: "ARRAY",
+  });
+
   function Tdu2Xmb(_io, _parent, _root) {
     this._io = _io;
     this._parent = _parent;
@@ -24,8 +56,7 @@ var Tdu2Xmb = (function() {
     this.metadataAddr = this._io.readU4le();
     this.subobjectTableAddr = this._io.readU4le();
     this.keyOffset = this._io.readU4le();
-    this.numberOfTypes = this._io.readU4le();
-    this.rest = this._io.readBytesFull();
+    this.numberOfTypesRaw = this._io.readU4le();
   }
 
   var KeyDef = Tdu2Xmb.KeyDef = (function() {
@@ -54,23 +85,47 @@ var Tdu2Xmb = (function() {
     return KeyDef;
   })();
 
-  var KeyDefs = Tdu2Xmb.KeyDefs = (function() {
-    function KeyDefs(_io, _parent, _root) {
+  var ObjectDefHeader = Tdu2Xmb.ObjectDefHeader = (function() {
+    function ObjectDefHeader(_io, _parent, _root) {
       this._io = _io;
       this._parent = _parent;
       this._root = _root || this;
 
       this._read();
     }
-    KeyDefs.prototype._read = function() {
-      this.header = new KeyDefHeader(this._io, this, this._root);
+    ObjectDefHeader.prototype._read = function() {
+      this.rawKeyInfo = this._io.readU4le();
+      this.unknown = this._io.readU4le();
+    }
+    Object.defineProperty(ObjectDefHeader.prototype, 'numberOfKeys', {
+      get: function() {
+        if (this._m_numberOfKeys !== undefined)
+          return this._m_numberOfKeys;
+        this._m_numberOfKeys = ((this.rawKeyInfo >>> 4) & 2047);
+        return this._m_numberOfKeys;
+      }
+    });
+
+    return ObjectDefHeader;
+  })();
+
+  var ObjectDef = Tdu2Xmb.ObjectDef = (function() {
+    function ObjectDef(_io, _parent, _root) {
+      this._io = _io;
+      this._parent = _parent;
+      this._root = _root || this;
+
+      this._read();
+    }
+    ObjectDef.prototype._read = function() {
+      this.header = new ObjectDefHeader(this._io, this, this._root);
       this.keys = new Array(this.header.numberOfKeys);
       for (var i = 0; i < this.header.numberOfKeys; i++) {
         this.keys[i] = new KeyDef(this._io, this, this._root);
       }
     }
 
-    return KeyDefs;
+    return ObjectDef;
   })();
 
   var TypeDef = Tdu2Xmb.TypeDef = (function() {
@@ -82,37 +137,47 @@ var Tdu2Xmb = (function() {
       this._read();
     }
     TypeDef.prototype._read = function() {
-      this.typeId = this._io.readU1();
-      this.typeSize = this._io.readU2le();
-      this.padding = this._io.readU1();
-      this.rest = this._io.readBytes(4);
+      this.packedTypeIdLen = this._io.readU4le();
+      this.nameStringOffset = this._io.readU4le();
     }
+    Object.defineProperty(TypeDef.prototype, 'typeId', {
+      get: function() {
+        if (this._m_typeId !== undefined)
+          return this._m_typeId;
+        this._m_typeId = (this.packedTypeIdLen & 255);
+        return this._m_typeId;
+      }
+    });
+    Object.defineProperty(TypeDef.prototype, 'privateLen', {
+      get: function() {
+        if (this._m_privateLen !== undefined)
+          return this._m_privateLen;
+        this._m_privateLen = (this.packedTypeIdLen >>> 16);
+        return this._m_privateLen;
+      }
+    });
 
     return TypeDef;
   })();
 
-  var KeyDefHeader = Tdu2Xmb.KeyDefHeader = (function() {
-    function KeyDefHeader(_io, _parent, _root) {
+  var ObjectDefs = Tdu2Xmb.ObjectDefs = (function() {
+    function ObjectDefs(_io, _parent, _root) {
       this._io = _io;
       this._parent = _parent;
       this._root = _root || this;
 
       this._read();
     }
-    KeyDefHeader.prototype._read = function() {
-      this.rawKeyInfo = this._io.readU4le();
-      this.unknown = this._io.readU4le();
-    }
-    Object.defineProperty(KeyDefHeader.prototype, 'numberOfKeys', {
-      get: function() {
-        if (this._m_numberOfKeys !== undefined)
-          return this._m_numberOfKeys;
-        this._m_numberOfKeys = ((this.rawKeyInfo >>> 4) & 2047);
-        return this._m_numberOfKeys;
+    ObjectDefs.prototype._read = function() {
+      this.def = [];
+      var i = 0;
+      while (!this._io.isEof()) {
+        this.def.push(new ObjectDef(this._io, this, this._root));
+        i++;
       }
-    });
+    }
 
-    return KeyDefHeader;
+    return ObjectDefs;
   })();
 
   var Metadata = Tdu2Xmb.Metadata = (function() {
@@ -124,21 +189,22 @@ var Tdu2Xmb = (function() {
       this._read();
     }
     Metadata.prototype._read = function() {
-      this.zero = this._io.readU4le();
       this.typeDefs = new Array(this._parent.numberOfTypes);
       for (var i = 0; i < this._parent.numberOfTypes; i++) {
         this.typeDefs[i] = new TypeDef(this._io, this, this._root);
       }
     }
-    Object.defineProperty(Metadata.prototype, 'keyDefs', {
+    Object.defineProperty(Metadata.prototype, 'objectDefs', {
       get: function() {
-        if (this._m_keyDefs !== undefined)
-          return this._m_keyDefs;
+        if (this._m_objectDefs !== undefined)
+          return this._m_objectDefs;
         var _pos = this._io.pos;
-        this._io.seek((this._parent.numberOfTypes * 4));
-        this._m_keyDefs = new KeyDefs(this._io, this, this._root);
+        this._io.seek((this._parent.numberOfTypesRaw * 4));
+        this._raw__m_objectDefs = this._io.readBytes(((this._parent.subobjectTableAddr - this._parent.metadataAddr) - (this._parent.numberOfTypesRaw * 4)));
+        var _io__raw__m_objectDefs = new KaitaiStream(this._raw__m_objectDefs);
+        this._m_objectDefs = new ObjectDefs(_io__raw__m_objectDefs, this, this._root);
         this._io.seek(_pos);
-        return this._m_keyDefs;
+        return this._m_objectDefs;
       }
     });
 
@@ -157,14 +223,22 @@ var Tdu2Xmb = (function() {
       this.names = []
       var i = 0;
       do {
-        var _ = KaitaiStream.bytesToStr(this._io.readBytesTerm(0, false, true, true), "ascii");
+        var _ = KaitaiStream.bytesToStr(this._io.readBytesTerm(0, false, true, true), "ASCII");
         this.names.push(_);
         i++;
-      } while (!(_ == "AA"));
+      } while (!(_ == ""));
     }
 
     return NameList;
   })();
+  Object.defineProperty(Tdu2Xmb.prototype, 'numberOfTypes', {
+    get: function() {
+      if (this._m_numberOfTypes !== undefined)
+        return this._m_numberOfTypes;
+      this._m_numberOfTypes = Math.floor(this.numberOfTypesRaw / 2);
+      return this._m_numberOfTypes;
+    }
+  });
   Object.defineProperty(Tdu2Xmb.prototype, 'descriptorTableSection', {
     get: function() {
       if (this._m_descriptorTableSection !== undefined)
