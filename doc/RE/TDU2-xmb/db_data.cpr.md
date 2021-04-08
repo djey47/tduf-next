@@ -1,5 +1,8 @@
 DB_DATA.CPR
 ===========
+
+*obsolete contents, please refer to XMB-specs documentation*
+
 encryption ON, use tdudec GUI
 
 contains kind of database tables with 3 sections:

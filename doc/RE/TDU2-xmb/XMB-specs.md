@@ -6,6 +6,8 @@ Not sure if XMB stands for 'XML as binary form', this format exists as of TDU1 (
 
 XMB allows to store data with hierarchy: objects, arrays are supported, as well as primitive and custom types. Thus providing a generic way to store all kind of game information.
 
+Current state of the project leads to a decompiled reader (based on game machine code), which actually works. Though, a writer routine remains to be implemented.
+
 ## Encryption support
 Files may be encrypted, in this case use TDUdec tool (originally written by Luigi Auriemma) with non-savegame mode. Actually both TDU1 and TDU2 share the same encryption keys.
 
@@ -13,20 +15,32 @@ Files may be encrypted, in this case use TDUdec tool (originally written by Luig
 see `tdu2-xmb.ksy` definition file. XMB byte order is low-endian, on PC platform that is.
 
 ### Header (28 bytes)
+
+| Offset | Type   | Size (bytes) | Comment                  |
+|--------|--------|--------------|--------------------------|
+| 0x0    | STRING | 4            | Format TAG               |
+| 0x4    | UINT   | 4            | Version?                 |
+| 0x8    | UINT   | 4            | Descriptor table address |
+| 0xC    | UINT   | 4            | Metadata address         |
+| 0x10   | UINT   | 4            | Subobject table address  |
+| 0x14   | UINT   | 4            | Key offset               |
+| 0x18   | UINT   | 4            | Number of types (x2)     |
+
 This section contains format tag (4 ASCII chars) + a magic value (4 bytes)
 
-, as well as 3 address pointers of 4 bytes each:
+, as well as 3 address pointers of 4 bytes each (aka UINT32):
 - Descriptor table section
 - Metadata section
 - Data section
 
 , and 2 offsets of 4 bytes each :
 - Key offset: when added to descriptor table address, will point to the first key (root)
-- Number of types : actually multiplied by 2
+- Number of types (raw) : to get actual number, just divide it by 2
 
 More details about those 3 sections are given below.
 
-### Descriptor table (variable)
+### Descriptor table (variable length)
+
 This section is a list of all names used in the object tree, including:
 - object and array names
 - primitive value names
@@ -34,45 +48,44 @@ This section is a list of all names used in the object tree, including:
 
 This section starts at address given in header above; that is **0x1C** (28) as previous contents won't ever change.
 
-List layout is simply names on ISO-8859-2 encoding, each name ending with ASCII-0 character. Padding is used after the last string, using 0x41 ('A') character until the next section address is met (metadata).
+List layout is simply names on ISO-8859-2 encoding, each name ending with ASCII-0 character. Padding is used after the last string, using padding as **0x41** ('A') until the next section address is met (metadata).
 
 Notes: 
 - name ordering does not seem to have any importance here, thus relying on addresses later
-- may contain types which are not even used in this file...
-- is meant to be used by metadata section below.
+- may contain types which are not even used in this file. As a consequence we hope writing the only necessary names is sufficient (not tested yet)
+- it is meant to be used by metadata section below.
 
-### Metadata
-This section hosts many categories, in following order:
+### Metadata (variable length)
+This section hosts all type definitions (primitives, complex, arrays). It's a repetition (number of types read above) of following simplified structure:
 
-**All type definitions**
+| Offset (relative)                   | Type  | Size (bytes) | Comment                                         |
+|-------------------------------------|-------|--------------|-------------------------------------------------|
+| 0x0                                 | UINT  | 4            | Type information (packed)                       |
+| 0x4                                 | UINT  | 4            | Name offset in descriptor table                 |
+| 0x8                                 | BYTES | ?            | Repetition of key def structure                 |
 
-Relying on 8 bytes per type
-- 4 first bytes are the packed type (warning, weird layout down here!) :
-    - internal length is a byte at b32..b16 position
-        This value is not used by reader anyway
-    - type id is a byte at b7..b0 position
-        - See type definitions in appendix below
-- 4 following bytes are the offset to read the value in Descriptor table above
+Packed type information hosts many details:
+- Number of keys: calculated via formula `packed_type_info >> 4 & 0x7FF`
+- Type id: `packed_type_info & 0xFF` (check result in available types appendix)
+- Private length: `packed_type_info >> 0x10` (not used)
+- Other packed info is still unknown.
 
-TODO
+In case of complex objects, key definitions are also added. Purpose of this block is to describe the keys for all objects by pointing to descriptor and metadata table (for name and type, respectively). Following structure repeats for each available key:
 
-**All object keys**
+| Offset (relative) | Type | Size (bytes) | Comment                         |
+|-------------------|------|--------------|---------------------------------|
+| 0x0               | UINT | 4            | Name offset in descriptor table |
+| 0x4               | BYTE | 1            | Type offset in metadata         |
+| 0x5               | BYTE | 2            | Padding with zeroes             |
+| 0x7               | BYTE | 1            | Array marker                    |
 
-Relative (to metadata) address of this category is computed via formula `number of types * 4`, to skip type definition category. 
+*Note: array marker is set to **0x80** if the key points to an array, 0 otherwise*
 
-It contains :
-- number of object key names, extracted from 4 byte integer value, right shifted 4 times then with bitwise AND applied 0x7FF mask (basically divided by 16).
-- unknown value (4 byte integer)
-- for each object key :
-    - offset (4 byte integer) in descriptor table to get the key name
-    - type offset (1 byte)
-    - padding (2 bytes)
-    - array marker (1 byte)
+Absolute type address is finally computed via formula: `metadata section address + 4 * type offset`; that points to either a type def (for primitive) or key def (for sub object).
 
-Internal type address is then computed via formula: `metadata section address + 4 * type offset`. Found value at this address having bitwise AND applied 0xF mask, that gives value of the internal type (see Appendix below).
+### Data (variable length)
 
-
-### Data
+We'll find here all node values as primitives. This starts at `subobject table address`.
 
 TODO
 
@@ -95,5 +108,6 @@ TODO
 - (10) FLOAT: 4 bytes floating-point
 - (11) DOUBLE: 8 bytes floating-point
 - (12) STRING: C-style string (ending with \0)
-- (13) ARRAY: C-style string (ending with \0)
-- (?) VIRTUAL
+- (13) ARRAY: hosts many items of a same type
+- (?) VIRTUAL: role has not been determined yet
+- (x) OTHER: custom types.

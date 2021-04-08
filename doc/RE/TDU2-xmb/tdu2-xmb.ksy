@@ -26,52 +26,33 @@ types:
         type: strz
         encoding: ASCII
         repeat: until
-        repeat-until: _ == ''  # Padding
+        repeat-until: _ == ''  # Padding - 2 last items must be ignored
   metadata:
     seq:
       - id: type_defs
         type: type_def
         repeat: expr
         repeat-expr: _parent.number_of_types
-    instances:
-      object_defs:
-        pos : _parent.number_of_types_raw * 4
-        type: object_defs
-        size : _parent.subobject_table_addr - _parent.metadata_addr - _parent.number_of_types_raw * 4
   type_def:
     seq:
-      - id: packed_type_id_len
-        type: u4
+      - id: packed_type_info
+        type: u4    
       - id: name_string_offset
         type: u4
+      - id: keys
+        type: key_def
+        repeat: expr
+        repeat-expr: number_of_keys        
     instances:
-      type_id:
-        enum: data_type
-        value: packed_type_id_len & 0xFF
-      private_len:
-        value: packed_type_id_len >> 0x10
-  object_defs:
-    seq:
-      - id: def
-        type: object_def
-        repeat: eos
-  object_def:
-    seq:
-       - id: header
-         type: object_def_header
-       - id: keys
-         type: key_def
-         repeat: expr
-         repeat-expr: header.number_of_keys
-  object_def_header:
-    seq:
-      - id: raw_key_info
-        type: u4
-      - id: unknown
-        type: u4
-    instances:
+      type_name_abs_addr:
+        value: _root.descriptor_table_addr + name_string_offset
       number_of_keys:
-        value: raw_key_info >> 4 & 0x7FF
+        value: packed_type_info >> 4 & 0x7FF
+      primitive_type_id:
+        enum: data_type
+        value: packed_type_info & 0xFF
+      private_len:
+       value: packed_type_info >> 0x10
   key_def:
     seq:
       - id: name_string_offset
@@ -82,9 +63,13 @@ types:
         type: u2
       - id: array_marker
         type: u1
+        enum: special_marker
     instances:
       key_name_abs_addr:
         value: _root.descriptor_table_addr + name_string_offset
+      key_type_abs_addr:
+        value: _root.metadata_addr + 4 * type_offset        
+      # Kaitai does not allow parsing into a different stream, sadly...
       # key_name:
       #   pos: _root.descriptor_table_addr + name_string_offset
       #   type: str
@@ -119,3 +104,6 @@ enums:
     11: double
     12: string
     13: array
+  special_marker:
+    0: object
+    128: array
