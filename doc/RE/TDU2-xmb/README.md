@@ -140,4 +140,4 @@ The game might accept the file without it, hopefully.
 
 **Data section hex**
 
-![Data section hex][https://github.com/djey47/tduf-next/raw/master/doc/RE/TDU2-xmb/data-section-hex.png]
+![Data section hex](https://github.com/djey47/tduf-next/raw/master/doc/RE/TDU2-xmb/data-section-hex.png)
