@@ -84,8 +84,9 @@ instances:
   metadata_section:
     pos: metadata_addr
     type: metadata
-    size-eos: true
   data_section:
+    # Data section layout depends on object contents so can't be described here...
+    # Manual parsing has to be performed here, see README.md file for details
     pos: subobject_table_addr
     size-eos: true
 enums:
