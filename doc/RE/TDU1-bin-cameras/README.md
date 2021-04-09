@@ -1,3 +1,6 @@
+cameras bin notes
+=================
+
 # Cameras cycle order
 
 Hood => Bumper => Follow far => Follow large => Follow near => Cockpit => Hood...

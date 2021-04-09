@@ -1,3 +1,6 @@
+2db format notes
+================
+
 Format 2DB :
 144 -> A8R8G8B8
 
