@@ -16,15 +16,15 @@ see `tdu2-xmb.ksy` definition file. XMB byte order is low-endian, on PC platform
 
 ### Header (28 bytes)
 
-| Offset | Type   | Size (bytes) | Comment                  |
-|--------|--------|--------------|--------------------------|
-| 0x0    | STRING | 4            | Format TAG               |
-| 0x4    | UINT   | 4            | Version?                 |
-| 0x8    | UINT   | 4            | Descriptor table address |
-| 0xC    | UINT   | 4            | Metadata address         |
-| 0x10   | UINT   | 4            | Subobject table address  |
-| 0x14   | UINT   | 4            | Key offset               |
-| 0x18   | UINT   | 4            | Number of types (x2)     |
+| Offset | Type   | Size (bytes) | Comment                       |
+|--------|--------|--------------|-------------------------------|
+| 0x0    | STRING | 4            | Format TAG                    |
+| 0x4    | UINT   | 4            | Version?                      |
+| 0x8    | UINT   | 4            | Descriptor table address      |
+| 0xC    | UINT   | 4            | Metadata address              |
+| 0x10   | UINT   | 4            | Subobject data table address  |
+| 0x14   | UINT   | 4            | Key offset                    |
+| 0x18   | UINT   | 4            | Number of types (x2)          |
 
 This section contains format tag (4 ASCII chars) + a magic value (4 bytes)
 
@@ -85,9 +85,32 @@ Absolute type address is finally computed via formula: `metadata section address
 
 ### Data (variable length)
 
-We'll find here all node values as primitives. This starts at `subobject table address`.
+We'll find here all node values as primitives and array information. This starts at `subobject table address`. Items are stored inline, depending of the index in the key list of current object. There's no separator between values, so data type must be known to read it accordingly. For more information, refer to hex table illustration in **Data section hex.png** file (see illustrations in appendix).
 
-TODO
+Reading values is pretty different between objects and array cases.
+
+**Objects**
+
+Primitive type is fetched from metadata section. Primitive values are stored inline. If object contains an array, contained values are not here, special info is written instead :
+
+| Offset (relative) | Type | Size (bytes) | Comment                 |
+|-------------------|------|--------------|-------------------------|
+| 0x0               | UINT | 4            | Array length            |
+| 0x4               | UINT | 4            | Array start offset      |
+
+Thus, values contained in array must be read following indirection: at address `data table start + array start offset`.
+
+**Arrays**
+
+Content type is fetched from metadata section. Array values are stored inline, starting at start offset read in the parent object.
+
+There's no evidence of "array of array" existence in game files for now.
+
+**Additional data**
+
+Remaining contents are still unknown, it represents a huge part in the data section! 
+
+The game might accept the file without it, hopefully.
 
 ## Appendix
 
@@ -111,3 +134,10 @@ TODO
 - (13) ARRAY: hosts many items of a same type
 - (?) VIRTUAL: role has not been determined yet
 - (x) OTHER: custom types.
+
+
+### Illustrations
+
+**Data section hex**
+
+![Data section hex][https://github.com/djey47/tduf-next/raw/master/doc/RE/TDU2-xmb/data-section-hex.png]
