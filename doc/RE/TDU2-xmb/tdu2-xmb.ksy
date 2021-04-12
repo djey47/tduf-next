@@ -26,7 +26,7 @@ types:
         type: strz
         encoding: ASCII
         repeat: until
-        repeat-until: _ == ''  # Padding - 2 last items must be ignored
+        repeat-until: _ == ''  # Padding - last items must be ignored ('AA...' and below)
   metadata:
     seq:
       - id: type_defs
