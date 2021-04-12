@@ -4,12 +4,21 @@ This section hosts all notes taken while attempting to reverse engineer TDU file
 
 You'll also find file format structures in various forms, mostly under Kaitai Struct YAML (.ksy files).
 
-# App development ideas (obsolete)
+# IDE configuration (vscode)
+Allows to handle R/W of Kaitai structure definitions.
+## Plugins
+- [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+- [kaitai struct vscode](https://marketplace.visualstudio.com/items?itemName=fudgepops.kaitai-struct-vscode) (beta)
+## Settings
+```json
+"files.associations": {
+  "*.ksy": "yaml"
+},
+"yaml.schemas": {
+  "https://raw.githubusercontent.com/kaitai-io/ksy_schema/master/ksy_schema.json": "*.ksy"
+}, 
+```
 
-* Converter: TDUF structure file (*.map.json) to HexWorkshop structure definition (in library.hsl) => see http://www.hexworkshop.com/onlinehelp/600/html/idhelp_structure_libraries.htm
-* Front-end: Map with coordinates finder: select, search ...
-  * displaying areas and sectors
-  * displaying enabled spots with filter ...
-* Front-end: to apply mini patches (*.json) to TDU install
-  * Drag and drop of patch(es) from file explorer
-  * Compressed database or bnk snapshot before changes
+# App development ideas
+
+* Converter: TDUF structure file (-map.json) to Kaitai structure definition => see http://doc.kaitai.io/ksy_diagram.html
