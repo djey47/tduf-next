@@ -1,6 +1,10 @@
 TDU SPOTS
 =========
 
+- [TDUF MSSDB.bin specs (alpha)](https://github.com/djey47/tduf/raw/master/lib-unlimited/src/main/resources/files/structures/BIN-spots-map.json)
+- [TDUF Hawaii spots def](https://github.com/djey47/tduf/raw/master/lib-unlimited/src/main/resources/files/structures/SPT-hawai-map.json)
+- [TDUF Map spots def](https://github.com/djey47/tduf/raw/master/lib-unlimited/src/main/resources/files/structures/SPT-sector-map.json)
+
 ## Questions
 - What is the role of MSSDB.bin? Looks like it can be deleted without issues...
 	Is it kind of reference file for development?

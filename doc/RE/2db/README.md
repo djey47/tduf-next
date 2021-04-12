@@ -1,6 +1,12 @@
 2db format notes
 ================
 
+TDU1/TDU2 share the same specifications.
+
+- [TDUF structure def (alpha)](https://github.com/djey47/tduf/raw/master/lib-unlimited/src/main/resources/files/structures/2DB-map.json)
+- [DDS structure def (alpha)](https://github.com/djey47/tduf/raw/master/lib-unlimited/src/main/resources/files/structures/DDS-map.json)
+## Archive
+
 Format 2DB :
 144 -> A8R8G8B8
 

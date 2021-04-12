@@ -1,6 +1,10 @@
 2dm format notes
 ================
 
+TDU2's 2DM files are NOT compatible with this spec!
+
+[TDUF structure def (beta)](https://github.com/djey47/tduf/raw/master/lib-unlimited/src/main/resources/files/structures/2DM-map.json)
+
 ## Raw notes
 
 struct size: 288(10)
