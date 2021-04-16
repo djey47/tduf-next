@@ -100,6 +100,8 @@ Primitive type is fetched from metadata section. Primitive values are stored inl
 
 Thus, values contained in array must be read following indirection: at address `data table start + array start offset`.
 
+Concerning strings, there's nothing particular here; values are inlined with the classic ISO-8859-2 encoding, terminated with the ASCII \0 character.
+
 **Arrays**
 
 Content type is fetched from metadata section. Array values are stored inline, starting at start offset read in the parent object.
