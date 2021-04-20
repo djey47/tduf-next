@@ -15,9 +15,9 @@ seq:
     type: u4
   - id: subobject_table_addr
     type: u4
-  - id: key_offset
+  - id: root_key_name_offset
     type: u4
-  - id: number_of_types_raw
+  - id: object_defs_offset
     type: u4
 types:
   name_list:
@@ -29,11 +29,10 @@ types:
         repeat-until: _ == ''  # Padding - last items must be ignored ('AA...' and below)
   metadata:
     seq:
-      - id: type_defs
-        type: type_def
-        repeat: expr
-        repeat-expr: _parent.number_of_types
-  type_def:
+      - id: defs
+        type: def
+        repeat: eos
+  def:
     seq:
       - id: packed_type_info
         type: u4    
@@ -76,14 +75,27 @@ types:
       #   size: 4
       #   encoding: 'ascii'
 instances:
+  root_key_name_address:
+    value: descriptor_table_addr + root_key_name_offset
+  type_defs_size:
+    value: object_defs_offset * 4
+  object_defs_address:
+    value: metadata_addr + type_defs_size
   number_of_types:
-    value: number_of_types_raw / 2
+    value: type_defs_size / 8
+  object_defs_size:
+    value: subobject_table_addr - object_defs_address
   descriptor_table_section:
     pos: descriptor_table_addr
     type: name_list
-  metadata_section:
+  meta_types_section:
     pos: metadata_addr
     type: metadata
+    size: type_defs_size
+  meta_objects_section:
+    pos: metadata_addr + type_defs_size
+    type: metadata
+    size: object_defs_size
   data_section:
     # Data section layout depends on object contents so can't be described here...
     # Manual parsing has to be performed here, see README.md file for details

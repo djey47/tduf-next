@@ -23,7 +23,7 @@ see `tdu2-xmb.ksy` definition file. XMB byte order is low-endian, on PC platform
 | 0x8    | UINT   | 4            | Descriptor table address      |
 | 0xC    | UINT   | 4            | Metadata address              |
 | 0x10   | UINT   | 4            | Subobject data table address  |
-| 0x14   | UINT   | 4            | Key offset                    |
+| 0x14   | UINT   | 4            | Root key name offset          |
 | 0x18   | UINT   | 4            | Number of types (x2)          |
 
 This section contains format tag (4 ASCII chars) + a magic value (4 bytes)
