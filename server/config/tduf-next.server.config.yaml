@@ -1,0 +1,13 @@
+server:
+  port: 2020
+tdu:
+  gamePath: '/home/djey/app/tdu'
+tduf:
+  path: '/home/djey/app/tduf'
+gui:
+  relativePath: '../client/dist'
+  open: true
+java:
+  jrePath: '/home/djey/app/jdk/8.0.252.fx-zulu/jre/bin'
+options:
+  

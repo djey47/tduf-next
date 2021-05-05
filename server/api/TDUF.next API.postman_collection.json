@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "4f847c5b-94ed-402a-bf8c-8512fcddaadc",
+		"name": "TDUF.next API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GAME start (with switches)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"args\": {\n\t\t\"switches\": [\"-fps\", \"-w\", \"-bigbnk\"]\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/tools/game/start",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"tools",
+						"game",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DATABASE EDITOR start (with switches)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"args\": {\n\t\t\"switches\": [\"-v\"]\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/tools/databaseEditor/start",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"tools",
+						"databaseEditor",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FILE bankinfo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"args\": {\n\t\t\"input\": \"/home/djey/app/tdu/Euro/Bnk/Database/DB.bnk\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/tools/file/bankinfo",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"tools",
+						"file",
+						"bankinfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CONFIGURATION",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/config",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STOP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/stop",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"stop"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

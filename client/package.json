@@ -1,0 +1,40 @@
+{
+  "name": "tduf-next-lab-web",
+  "version": "0.0.0",
+  "private": true,
+  "author": "djey",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test": "vue-cli-service test:unit --coverage",
+    "test:watch": "vue-cli-service test:unit --watch",
+    "lint": "vue-cli-service lint src --no-fix"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "vue-code-highlight": "^0.7.4",
+    "vue-spinner": "^1.0.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-plugin-eslint": "~4.4.0",
+    "@vue/cli-plugin-unit-jest": "^4.4.6",
+    "@vue/cli-service": "~4.4.0",
+    "@vue/test-utils": "^1.0.3",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-jest": "^23.17.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "identity-obj-proxy": "^3.0.0",
+    "vue-template-compiler": "^2.6.11",
+    "yaml-jest": "^1.0.5",
+    "yaml-loader": "^0.6.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "license": "MIT"
+}
