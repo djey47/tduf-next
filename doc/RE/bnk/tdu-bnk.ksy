@@ -1,5 +1,5 @@
 meta:
-  id: tdu2_bnk
+  id: tdu_pc_1_2_bnk
   file-extension: bnk
   endian: le
 seq:
@@ -20,6 +20,14 @@ types:
       - id: data
         type: size_data
         size: common.length
+    instances:
+      # Little clunky implementation, but still..
+      size_entry_length:
+        value: common.length / (_root.header.data.packed_count + 1)
+      is_for_tdu1:
+        value: size_entry_length == 16
+      is_for_tdu2:
+        value: size_entry_length == 20
   type_mapping_section:
     seq:
       - id: common
@@ -69,7 +77,7 @@ types:
       - id: block_size
         type: u4
       - id: sixteen
-        type: u4
+        contents: [0x10, 0x0, 0x0, 0x0]
       - id: packed_count
         type: u4
       - id: year
@@ -91,6 +99,7 @@ types:
       - id: size_entries
         type: size_entry
         repeat: expr
+        # Final padding block size info is excluded
         repeat-expr: _root.header.data.packed_count
   type_mapping_data:
     seq:
@@ -124,10 +133,12 @@ types:
         type: u4
       - id: size
         type: u4
+      # Kind of checksum?
       - id: unknown
         size: 8
       - id: sixteen
-        type: u4
+        if: _parent._parent.is_for_tdu2
+        contents: [0x10, 0x0, 0x0, 0x0]
   type_mapping_entry:
     seq:
       - id: type
@@ -138,21 +149,29 @@ types:
         enum: file_subtype
   tree_entry:
     seq:
-      - id: name_size
+      - id: raw_name_size
         type: s1
       - id: children_count
+        if: is_directory
         type: u1
-        if: name_size < 0
+      # - id: weirdo
+      #   type: u1
+        if: is_directory
       - id: dir_name
+        if: is_directory
         type: str
         encoding: ascii
-        size: name_size * -1
-        if: name_size < 0
+        size: raw_name_size * -1
       - id: file_name
+        if: is_file
         type: str
         encoding: ascii
-        size: name_size
-        if: name_size >= 0
+        size: raw_name_size
+    instances:
+      is_directory:
+        value: raw_name_size < 0
+      is_file:
+        value: not is_directory
   order_entry:
     seq:
       - id: tree_file_index
@@ -165,8 +184,7 @@ types:
       file:
         pos: _root.size_section_instance.data.size_entries[file_index].address
         size: _root.size_section_instance.data.size_entries[file_index].size
-        
-      
+              
 instances:
   size_section_instance:
     pos: header.data.size_section_addr
