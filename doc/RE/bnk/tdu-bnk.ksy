@@ -99,8 +99,8 @@ types:
       - id: size_entries
         type: size_entry
         repeat: expr
-        # Final padding block size info is excluded
-        repeat-expr: _root.header.data.packed_count
+        # Final padding block size info is included - not a real file!
+        repeat-expr: _root.header.data.packed_count + 1
   type_mapping_data:
     seq:
       - id: type_mapping_entries
@@ -139,6 +139,10 @@ types:
       - id: sixteen
         if: _parent._parent.is_for_tdu2
         contents: [0x10, 0x0, 0x0, 0x0]
+    instances:
+      # Normally, size of padding block should be 0 
+      is_packed_file:
+        value: size != 0
   type_mapping_entry:
     seq:
       - id: type
@@ -154,9 +158,10 @@ types:
       - id: children_count
         if: is_directory
         type: u1
-      # - id: weirdo
-      #   type: u1
-        if: is_directory
+      # Find reason for this... in hud.bnk
+      - id: magic
+        type: u1
+        if: is_directory and children_count >= 176
       - id: dir_name
         if: is_directory
         type: str
