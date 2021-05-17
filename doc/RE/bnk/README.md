@@ -26,6 +26,9 @@ Known sections are below, in order:
 - magic (optional): TBD
 - packed data
 
+
+
+
 # Interesting notes
 
 ## Padding string
@@ -33,6 +36,13 @@ Known sections are below, in order:
 WTF... Every section and packed file end with a special, repeatable, padding string `STNICC2000 RULEZPADDING DATAS...-ORIC AND ATARI--COOL  MACHINES-`. Is this kind of alignment to improve file reading speed?
 
 It seems to be truncatable/replaceable though, but that has not been widely tested. Current TDUMT2 writer implementation does replace it btw ;)
+
+### In-between section padding
+TBD
+
+### In-between packed files padding
+TBD
+
 
 ## Section checksum
 
