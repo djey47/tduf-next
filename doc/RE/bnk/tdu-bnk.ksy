@@ -115,7 +115,7 @@ types:
   order_data:
     seq:
       - id: order_entries
-        type: order_entry
+        type: order_entry(_index)
         repeat: eos
   common_data:
     seq:
@@ -178,8 +178,11 @@ types:
       is_file:
         value: not is_directory
   order_entry:
+    params:
+      - id: file_index
+        type: u4
     seq:
-      - id: tree_file_index
+      - id: tree_filename_index
         type: u1
   packed_entry:
     params:
