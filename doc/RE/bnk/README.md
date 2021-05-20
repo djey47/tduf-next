@@ -4,7 +4,6 @@ BNK FORMAT SPECIFICATION
 TDU Banks for TDU1/TDU2, consider them as zip files without compression. However, format seems to be designed to host metadata for TDU game engine (optimization goals?).
 
 # Structure
-
 cf. *tdu-bnk.ksy* file as kaitai struct format for details.
 
 ## General layout
@@ -20,7 +19,7 @@ Known sections are below, in order:
 
 - general header
 - sizes: kind of index
-- type mapping
+- type mapping (optional)
 - tree: directory and file hierarchy
 - order: maps tree to index
 - magic (optional): TBD
@@ -29,26 +28,30 @@ Known sections are below, in order:
 ### Common info header (8 bytes)
 
 - section data size as 4 bytes, unsigned integer
-- section checksum as 4 bytes, unsigned integer, that is first complement of `CRC32(dataBytes)`
+- section checksum as 4 bytes, unsigned integer, that is first complement of `CRC32(dataBytes[])`
 
 Game behaviour remains to be tested when putting wrong checksum for a section.
 
-### Padding string
+### Padding string (WTF)
 
-WTF... Every section and packed file end with a special, repeatable, padding string `STNICC2000 RULEZPADDING DATAS...-ORIC AND ATARI--COOL  MACHINES-`. Is this kind of alignment to improve file reading speed?
+Every section and packed file end with a special, repeatable, padding string `STNICC2000 RULEZPADDING DATAS...-ORIC AND ATARI--COOL  MACHINES-`. Is this kind of alignment to improve file reading speed?
 
 It seems to be truncatable/replaceable though, but that has not been widely tested. Current TDUMT2 writer implementation does replace it btw ;)
 
 So necessary padding is calculated to satisfy a total length (data + padding) multiple of a block size.
 
 **In-between section padding**
-Every section + padding seem to have size multiple of 4. 
+Every section + padding seem to have size multiple of *section* `blockSize` item in general header data. 
 
 **In-between packed files padding**
-Every packed file + padding seem to have size multiple of 16 (or possibly `blockSize` item in general header data?).
+Every packed file + padding seem to have size multiple of *packed file* `blockSize` item in general header data.
 
 
 # Interesting notes
+
+## Limitations
+
+- Maximum packed file count per directory: 255
 
 ## Differences between TDU1/TDU2
 
@@ -60,5 +63,16 @@ To determine weither selected BNK is for TDU1 or TDU2, we'll thus check indirect
 
 ## Weird 0x1 byte!
 
-In file tree section: in some cases, a byte has been inserted next to entry count in a directory, with value `0x1`. Whereas current reader implementations just detect this byte and do ignore it, the game seems to complain if it's not present after rewriting. The meaning of this byte is unclear, still.
+File tree section: in some cases, a byte is present next to entry count in a directory, with value `0x1`. Whereas current reader implementations just detect this byte and do ignore it, the game seems to complain if it's not present after rewriting. The meaning of this byte is unclear, still.
 
+e.g 0x[FC C1 01 2E 32 64 62]  <=> ü Á  . 2 d b
+- 0xFC: -4, so packed directory with name length = 4
+- 0xC1: 193 packed files in that directory
+- 0x01: weird byte!
+- 0x[2E .. 62]: directory name is '.2db'.
+
+Known files:
+- Euro\Bnk\FrontEnd\HiRes\hud.bnk, 176 packed files
+- Euro\Bnk\FrontEnd\HiRes\hud_cha.bnk, 193 packed files.
+
+For now, TDUMT implementation at writing will put a 0x1 when file count >= 176 - which is far from ideal solution...
