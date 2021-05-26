@@ -1,0 +1,540 @@
+Note: Some of these require you to have an internal debug/beta build of Test Drive Unlimited and thus will not work. ( - OR - They need to be located in another .ini file, if only we could load GamePC.ini)
+Note: Stuff up top here, use default values from an internal beta/debug version of Test Drive Unlimited.
+
+// Set Game Version
+SetVersion				= ""
+
+// Set Network Protocol Version
+SetProtocolVersion			= ""
+
+// Set Freeride Version (?)
+SetFreerideVersion			= ""
+
+// Set Game Resource Path.
+SetResPath  			= "EuroZ/BNK/"
+
+// Set Xbox 360 DVD Location?
+SetDVDPath  			= "DVDEURO/"
+
+// Search in game exe location first before checking DVD?
+SearchInBootFirst		= TRUE
+
+// Set current gamemode to load after loading the game.
+SetCurGameMode 			= 0			// GAME_MODE_BOOTMENU 			= 0
+									// GAME_MODE_FREERIDE 			= 1
+									// GAME_MODE_MAP				= 2
+									// GAME_MODE_HOME				= 3
+									// GAME_MODE_SHOP				= 4
+									// GAME_MODE_MISSION			= 5
+									// GAME_MODE_EDITOR				= 6
+									// GAME_MODE_CARSHOWCASE		= 7
+									// GAME_MODE_INSTANTCHALLENGE	= 8
+									// GAME_MODE_TESTCAR			= 9
+									// GAME_MODE_GARAGE				= 10
+									// GAME_MODE_LIVING				= 11
+									// GAME_MODE_SANDBOX			= 12
+									// GAME_MODE_GOODIES			= 13
+									// GAME_MODE_AVARTARSHOWCASE    = 14
+									// GAME_MODE_DRIVEIN		    = 15
+									// GAME_MODE_DRESSING			= 16
+									// GAME_MODE_AFTMARKT			= 17
+									// GAME_MODE_VIDEOBUMPER		= 18
+									// GAME_MODE_AITRAINER			= 19
+									// GAME_MODE_CINVIEWER		 	= 20
+									// GAME_MODE_ESTATES			= 21
+									// GAME_MODE_CLUB				= 22
+									// GAME_MODE_LOBBY				= 23
+									// GAME_MODE_LOGIN				= 24
+									// GAME_MODE_ONLINEREPLAY		= 25
+									// GAME_MODE_INTRO				= 26
+									// GAME_MODE_OUTRO_DEMO			= 27
+									// GAME_MODE_BOATTOUR			= 28
+									// GAME_MODE_JAIL				= 29
+									// GAME_MODE_INTRO_DEMO			= 30
+
+// Set Which Language is the default one displayed.
+
+//SetDefaultLanguage		gb			// "ge","sp","it","fr","gb"
+
+// See all car shops.
+//MYNAMEISHUGUESOICANSEEALLCARS
+
+// Skip boot menu and go straight into a new game, requires an internal debug/beta build of Test Drive Unlimited.
+//BOOTMENU				= 0
+
+// Unlock all roads (except ones that unlock with your progression) - requires an internal debug/beta build of Test Drive Unlimited.
+UnlockAllRoads			FALSE
+
+// Load custom levels. Some debug ones have been listed here.
+
+//AddLevel				= "Hawai_Route"		// Level Choose
+AddLevel				= "Hawai"		// Level Choose
+//AddLevel				= "Hawai_GoPlay"		// Level Choose
+
+
+// Disable TUTORIAL messages(?) requires an internal debug/beta build of Test Drive Unlimited(?)
+
+TUTORIAL				= ON
+
+// Disable the intro tutorial(?) requires an internal debug/beta build of Test Drive Unlimited(?)
+SCENARIOTUTORIAL		= OFF
+
+
+// Load a custom race from file.
+
+//LoadIGE					= "KOMO MAI"	// load ige from file (created by gme)
+
+// Cinematics to play after loading a game and perhaps setting gamemode to cinematic viewer. Requires an internal debug/beta build of Test Drive Unlimited
+//DEFAULTCINEMATIC	"Level/Hawai/Spots/ERE_A" "C_INTRO_E"
+//DEFAULTCINEMATIC	"Interior/Realtor/IRE_A" "C_INTERIOR_L"
+//DEFAULTCINEMATIC	"Level/Hawai/Spots/ECD_10A" "C_INTRO_E_1"
+
+// Default Start Postions when starting a new game when set to FREERIDE. Requires an internal debug/beta build of Test Drive Unlimited
+
+//DEFAULTSTARTPOSITION 22520 255 32552
+//DEFAULTSTARTPOSITION	47673 3 52078			// Start temporaire E3D
+//DEFAULTSTARTPOSITION	47528 1 52063			// Tests Lobbying
+//DEFAULTSTARTPOSITION	61620 4 44740 			// Sud-Est
+//DEFAULTSTARTPOSITION	46710 110 46740			// Tantalus Drive
+//DEFAULTSTARTPOSITION	22066 8 9324 			// Nord
+//DEFAULTSTARTPOSITION	37626 3 13100 			// Nord-Est
+//DEFAULTSTARTPOSITION	48780 33 52600			// Home 
+//DEFAULTSTARTPOSITION	18320 359 27086			// Centre-Ouest (Kokekole Pass sur Trimble Road)
+//DEFAULTSTARTPOSITION	3725 6 20668			// Nord-Ouest
+//DEFAULTSTARTPOSITION	11123 820 23709			// Toit du monde
+//DEFAULTSTARTPOSITION	60229 43 50545			// Hanauma Bay0
+//DEFAULTSTARTPOSITION	45984 150 45766			// la foret a pépé
+//DEFAULTSTARTPOSITION	54172 36 48421			// la mini ville a pépé
+//DEFAULTSTARTPOSITION	24164 167 35746			// Test ambiance
+
+ 
+//FPPD
+//DEFAULTSTARTPOSITION	64975 157 46580			// Maison FPPD (Makapuu Head)
+//DEFAULTSTARTPOSITION	63579 1 48587			// Départ Instant Challenge
+//DEFAULTSTARTPOSITION	60441 3 48670			// Arrivée Instant Challenge
+//DEFAULTSTARTPOSITION	47232 1 50842			// Emplacement bookmark
+//DEFAULTSTARTPOSITION	47744 1 50700			// Entrée concessionnaire MERCEDES
+//DEFAULTSTARTPOSITION	43311 1 47531			// Ville Générée
+//DEFAULTSTARTPOSITION	59979 32 50404			// Tests changement de zone
+//DEFAULTSTARTPOSITION	35064 2 45510			// Monza
+//DEFAULTSTARTPOSITION	45288 14 47156			// UV Road shismé
+//DEFAULTSTARTPOSITION	58271 11 43056			// Car Paint
+DEFAULTSTARTPOSITION	58999 32 51896			// Demo Position
+
+// Remove some default challenges from the map.
+REMOVESPOTFROMMAP	"ECH_C"
+REMOVESPOTFROMMAP	"ECW_A_F"
+REMOVESPOTFROMMAP	"ECH_C_N"
+REMOVESPOTFROMMAP	"EDI_A_N"
+
+// Enable/disable Woosh sound effect
+
+WooshEnabled		=	1
+
+// Enable/disable PostFXs
+
+PostFXEnabled		=	1
+
+// Enable/disable the Ocean
+
+OceanEnabled		=	1
+
+// Enable/disable Grass.
+
+GrassEnabled		=	1
+
+// Enable/disabled Weather
+
+WeatherEnabled		= 1
+
+// Enable the SUN?
+SUNENABLED			= 1
+
+// Set Default Weather Decription
+SetDefaultWeatherDesc	=	"DEFAULT"
+
+// Set Weather Descriptions
+//				GameMode		WeatherDescName		
+SetWeatherDesc		=	1			"FREERIDE"				// GAME_MODE_FREERIDE
+SetWeatherDesc		=	2			"FREERIDE"				// GAME_MODE_MAP
+SetWeatherDesc		=	3			"HOME"					// GAME_MODE_HOME
+SetWeatherDesc		=	5			"FREERIDE"				// GAME_MODE_MISSION
+SetWeatherDesc		=	6			"FREERIDE"				// GAME_MODE_EDITOR
+SetWeatherDesc		=	7			"CARSHOWCASE"			// GAME_MODE_CARSHOWCASE
+SetWeatherDesc		=	8			"FREERIDE"				// GAME_MODE_INSTANTCHALLENGE
+SetWeatherDesc		=	9			"FREERIDE"				// GAME_MODE_TESTCAR
+SetWeatherDesc		=	12			"FREERIDE"				// GAME_MODE_SANDBOX
+SetWeatherDesc		=  	16			"DRESSING"				// GAME_MODE_DRESSING
+SetWeatherDesc		=	17			"FREERIDE"				// GAME_MODE_AFTMARKT
+SetWeatherDesc		=  	21			"FREERIDE"				// GAME_MODE_ESTATES
+SetWeatherDesc		=  	23			"FREERIDE"				// GAME_MODE_LOBBY
+
+// Set Flash GUI Frontend locations.
+SetFlashCommonPath	"FRONTEND"
+SetFlashRootPath	"FRONTEND"
+
+// Flash Frontend Stuff.
+// This is the list of possible boot image, be careful of max param number (MAX_BOOT_MENU)
+BootMenuList "BOOT_01"
+
+// #GM: -1 for a resource installed once for all the game
+//		0..n for a gamemode identifier (see SetCurGameMode above)
+//
+//				file name	#GM		MaxVars	strips	vrx
+AddFlashMovie	"GENERAL"	-1		2048	700		7000
+//AddFlashMovie	"BOOT"		0		2048	200		5000
+AddFlashMovie	"HOME"		3		2048	800		15000
+AddFlashMovie	"HOME"		11		2048	800		15000
+AddFlashMovie	"HOME"		16		2048	800		15000
+AddFlashMovie	"HOME"		10		2048	800		15000
+AddFlashMovie	"MAP"		2		2048	400		13000
+AddFlashMovie	"HUD"		1		2048	1000	8000
+AddFlashMovie	"GAUGES"	1		512		200		1000
+AddFlashMovie	"CHALLENG"	23		2048	500		11000
+AddFlashMovie	"HUD_CHA"	5		2048	500		7000
+AddFlashMovie	"GAUGES"	5		2048	200		1000
+AddFlashMovie	"GMEDITOR"	6		2048	400		6900
+
+AddFlashMovie	"SHOPS"		4		2048	700		13000
+AddFlashMovie	"CAR_SHOW"	7		2048	2000	50000
+AddFlashMovie	"ICE"		8		2048	5000	50000
+AddFlashMovie	"HUD_CHA"	9		2048	500		7000
+AddFlashMovie	"GAUGES"	9		2048	200		1000
+AddFlashMovie	"SANDBOX"	12		2048	200		5000
+AddFlashMovie	"SHOPS"  	13		2048	600		30000
+AddFlashMovie	"AVATAR"	14		2048	200		10000
+AddFlashMovie	"DRIVE_IN"	15		2048	1100	33000
+AddFlashMovie	"SHOPS"		17		2048	600		30000
+AddFlashMovie	"VIEWER"	20		2048	600		15000
+AddFlashMovie	"SHOPS"		21		2048	1000	40000
+AddFlashMovie	"CLUB"		22		2048	600		15000
+AddFlashMovie	"LOG_IN"	24		2048	2000	30000
+AddFlashMovie	"LOG_IN"	0		2048	2000	30000
+AddFlashMovie	"INTRO"		26		2048	2000	10000
+AddFlashMovie	"DEMO_END"	27		2048	2000	10000
+AddFlashMovie	"DEMO_END"	30		2048	2000	10000
+
+// Set how long the line on the GPS is.
+SetTraceSize				=	500 // default is 500
+
+// Enable Automatic bookmark when driving around
+SetAutoSaveBookMarkLength	=	-1 // in meters, -1 to disable
+
+// ???
+EnableMinimapDensity		=	TRUE
+
+// Enable AI Traffic in the GPS.
+EnableMinimapIA				=	FALSE
+
+// Enable other players in the GPS.
+EnableMinimapNetPlayer		=	TRUE
+
+// AI Traffic Stuff.
+
+// VehicleMaxCount is the hard limit of simultaneous AI vehicles
+// But you can set TrafficMaxCount+ParkedMaxCount > VehicleMaxCount
+// Example: vehicle=16 traffic=16 parked=8
+//  -> you can spawn up to 16 traffic if no parked vehicles on the area,
+//     but only spawn up to 8 traffic if 8 parked are here
+//     and 0 parked cars if 16 traffic cars are already spawned
+//
+VehicleMaxCount					=	8
+TrafficMaxCount					=	8
+ParkedMaxCount					=	2
+
+// Maximum count of Traffic AI that will be physics enabled at the same time
+PhysicsMaxCount					=	4
+
+// AI Bots stuff
+// opponent
+OpponentDifficulty				=	1.0				// Between 0.0f & 1.0f
+IAReplacePlayer					=	0					// 0 , 1 (boolean) // During race, An Opponent Ai replace the player
+SameCarThanPlayer				=	0					// 0 , 1 (boolean) // During race, First Opponent Ai has same car than player
+ForceNbOpponents				=	-1	// Negative means disable, force this amount of bots in races and instant challenges.
+OppSharpTurnLimit				=	0.1				// If Ai steer more than OppSharpTurnLimit value,
+OppSharpTurnMaxSpeed			=	10.0			// and if its speed is less than OppSharpTurnMaxSpeed,
+OppSharpTurnClampValue			=	0.7				// its accel value is clamped at OppSharpTurnClampValue
+
+// Police Stuff.
+// police
+PoliceMaxCount					=	3					// Between 0 & 15 
+																				// NB : TrafficMaxCount  must be <= 15 if PoliceMaxCount > 0										
+PoliceForceChase				=	0					// 0 , 1 (boolean) if true : cop automatically chase player no matter of infringement
+PoliceForceDensity				=	0					// 0 , 1 (boolean) if true : the wanted cop density is always respected else it is a max density
+
+//Bots
+// Enable/Disable Freeride bots.
+EnableBots						=	1
+// Enable/Disable Jail.
+EnableJail						=	1									
+
+// Physics Stuff for AI.
+// 1st radius: Traffic cars inside this radius will switch to physics (for a max. of PhysicsMaxCount cars)
+// 2nd radius: Removable cars outside this radius will be uninstaciated
+// fov dist.: Visibility coef is ponderated by [1..0] when dist to camera is [0..fov_dist]
+// fov magnitude: not used, apart for debug tests
+//
+//							1st radius		2nd radius		fov dist.	fov magnitude
+CullingConfig				100				500				1000		45
+
+//							Ratio Visible	MinTimeInterval	MaxTimeInterval
+SpawnConfig					0.6				0.2				0.4
+
+// Traffic cars will appear all around the player car, on a circle which radius will be:
+//   radius = speed * reaction_time
+//   radius clamped such as:  min_spawn_dist < radius < max_spawn_dist
+// 
+//							Reaction Time	Min Spawn Dist	Max Spawn Dist
+SpawnDistances				4				200				400
+
+// If you want to see only a certain list of traffic car models, uncomment and modify this:
+// (you can have several ForceCarModel at the same time)
+//ForceCarModel		"SUV2"		// this is the file name, without the extension
+//ForceCarModel		"COMPACT1"
+//ForceCarModel		"BUS1"
+
+
+// Physics Debugging.
+
+RemoteDebugger		=	0
+PhysicsDebugInfo	=	0
+IgnitionFadeTime	=	0.8
+GrassAsTarmac		=	0
+PhysicsThread		=	NORMAL	90		//  OFF, NORMAL, REALTIME + FREQUENCY
+
+// Default Configuration to have when starting a new game in FREERIDE. Requires an internal debug/beta build of Test Drive Unlimited
+
+// IDs of cars to install in garage (offline only)
+DefaultGarageConfig 1030 221 213 1501 205 1012 117 202 
+// House to search (offline only)
+DefaultHouse		"EPH_L1A_5554"
+// Default money (offline only)
+DefaultMoney		100000000
+// Do we want to have all available houses filled with cars ?
+AllHousesWithDefCars		FALSE
+
+
+///				Manufacturer		Model			Version
+
+
+//DefaultCarConfig      "Alfa Romeo"        "GT"					"V6"
+
+//DefaultCarConfig 		"Aston Martin"		"AMV8"  
+//DefaultCarConfig		"Aston Martin"      "DB4"
+//DefaultCarConfig		"Aston Martin"      "DB9"
+
+//DefaultCarConfig		"Camarro"			"Z23"
+
+//DefaultCarConfig 		"Caterham"			"Superlight"			"R500"
+
+//DefaultCarConfig 		"Dodge"				"Viper"					"SRT 10" 
+
+//DefaultCarConfig 		"Ducati"			"Monster"				"S4R"
+
+//DefaultCarConfig 		"Ferrari"			"Enzo"   
+//DefaultCarConfig      "Ferrari"			"250 GTO"
+//DefaultCarConfig      "Ferrari"			"575M"
+
+//DefaultCarConfig      "Ford"				"Cobra"
+//DefaultCarConfig 		"Ford"				"GT" 
+//DefaultCarConfig 		"Ford"				"Mustang"				"coupe"  
+//DefaultCarConfig      "Ford"              "Shelby"				"Cobra concept 2004"
+
+
+//DefaultCarConfig      "Jaguar"        "XKR"					"Convertible"
+
+//DefaultCarConfig      "Koenigsegg"        "CC"					"R"
+
+//DefaultCarConfig 		"Lamborghini"		"Murciellago"			"roadster"
+//DefaultCarConfig 		"Lamborghini"		"Murciellago"			"coupe"
+//DefaultCarConfig 		"Lamborghini"		"Gallardo"				"coupe"
+
+//DefaultCarConfig 		"Lotus"				"Elise"					"111R"
+//DefaultCarConfig 		"Lotus"				"Exige"					"240r"
+
+//DefaultCarConfig 		"Mercedes-Benz"		"SLK"					"55 AMG"
+//DefaultCarConfig 		"Mercedes-Benz"		"SLR"     
+//DefaultCarConfig 		"Mercedes-Benz"		"SL 300"				"Gullwing"
+//DefaultCarConfig 		"Mercedes-Benz"		"CLK"					"55 AMG"
+
+//DefaultCarConfig      "Nissan"            "350 Z"					"coupe"
+//DefaultCarConfig      "Nissan"            "Skyline"				"GTR34"
+
+//DefaultCarConfig		"Noble"             "M12"					"GTO-3R"
+
+//DefaultCarConfig 		"Pagani"			"Zonda"					"C12S"           
+//DefaultCarConfig 		"Pagani"			"Zonda"					"C12S Roadster"
+
+//DefaultCarConfig      "Pontiac"            "transam"					
+
+//DefaultCarConfig		"Ruf"	            "Rt12"
+
+//DefaultCarConfig      "Saleen"            "S7"					"Twin-Turbo"
+
+//DefaultCarConfig      "Shelby"            "Daytona"               "coupe"
+
+//DefaultCarConfig      "Volkswagen"        "W12"					"coupe"
+//DefaultCarConfig      "Volkswagen"        "W12"					"roadster"
+
+
+// Online Configuration
+
+// Database server to connect to, seems to stop project paradise connecting when changed.
+//server				"none"		none
+
+
+// Database Login	Database Pass
+DefaultLogin			"none"			"edenpwd"
+
+// Server address , none = LAN discovery
+// INTERNET / LAN
+
+// ORB Server	SERVER PORT
+ORB				"192.168.0.165"		9000
+Lobbying			"none"			8890
+GPSTracker			"none"
+// Database Server	SERVER PORT
+server				"192.168.0.87"		4501
+
+// Nickname (LogName if none)
+MultiplayerDetails		"none"
+
+// Use the SECURE/UNSECURE version of the Xenon Network Layer, XBOX 360 Only.
+XBLModeSecure			= FALSE
+
+//To disable effects of the timeout ON/OFF
+//This only affects others in the same P2P session as you, not the connection to the master server.
+// Disable P2P Player Timeout. Stops players from being removed from your session if the connection drops.
+// WARNING: THIS AFFECTS EVERYONE IN THE SAME SESSION AS YOU.
+// WARNING: IF ANOTHER PLAYER CONNECTION DROPS AND YOU ARE IN THE SAME SESSION
+// WARNING: THEY WILL NOT BE REMOVED FROM THE SESSION LEAVING LINGERING CONNECTIONLESS/PLAYERLESS CARS.
+// WARNING: THEY WILL ALSO STILL TAKE A PLAYER SLOT (8 Max Players in 1 P2P SESSiON.)
+KeepAlive				ON
+
+//Address for the dbgcom
+ComDebug			"127.0.0.1"
+
+// Timeout in sec before launching demo
+// < 0  means inactive
+DEMO_MODE_TIMER			= 60
+
+// Automatically connects when launching the FreeRide Mode
+AUTO_CONNECT_FREERIDE		= ON
+
+// Let's you start online races by yourself.
+//CANSTARTONLINERACEALONE
+
+//NETWORK_TIMINGS
+LAN_QOSRETIME					= 1690
+LAN_QOSGAMEOBJECTS				= 8000
+LAN_CORRECTION_ACTIVE				= 3
+LAN_CORRECTION_DT				= 0.300
+LAN_RETIME_DT					= 50
+LAN_DRIVING_LOOPBACK_ACTIVE			= FALSE
+LAN_DRIVING_LOOPBACK_SIZE			= 3
+
+
+NET512_QOSRETIME				= 1690
+NET512_QOSGAMEOBJECTS				= 8000
+NET512_CORRECTION_ACTIVE			= 3
+NET512_CORRECTION_DT				= 0.300
+NET512_RETIME_DT				= 50
+NET512_DRIVING_LOOPBACK_ACTIVE			= FALSE
+NET512_DRIVING_LOOPBACK_SIZE			= 3
+
+
+NET_CORRECTION_DISTRIBUTION		"CCCCCCCCCC"
+
+// END will stop the game from reading the .ini file any further.
+END
+
+=====================================================================================================================================
+// !!! Other findings, not listed in typical .ini file.!!! !!! DEFAULT VALUES MAY NOT BE KNOWN !!!
+=====================================================================================================================================
+
+//FullVisibilityTest	=	1
+
+// Replays...only LOADREPLAY works but you'll need a valid replay.
+// SAVEREPLAY burp
+// LOADREPLAY burp
+
+// Turn off intro Movies, project paradise skips these? Seems to work on Xbox 360 Beta Build.
+
+SETMOVIE = OFF
+
+
+
+
+//SetMemCheck		= TRUE // Some Xbox 360 thing. Causes crashes on Xbox 360 Beta Build? (OOM?)
+//SetProfile		= FALSE	// Enables Profiling. Internal Beta Builds Only.
+
+// Enable High-Res Screenshots?
+
+//HIGHRESSCREENENABLED = TRUE
+
+//Increase by this amount...
+//SIZEINCREASE = 5 
+
+// IDK.
+//NBSAMPLEPERPIXEL = 100
+
+// Max Flash Movies.
+//SETMAXFLASHMOVIES = 0
+
+// Enable Cubemap Shooting.
+//CUBEMAPSHOOTING = TRUE
+
+//Replace Challenge Editor with Instant Challenge with a bot? (may take parameters?) (!!!crazy stake warning!!!)
+//If you use ForceNbOpponents you can set more random bots in your instant challenge.
+
+//ICESOLO = TRUE
+
+// Forces Multiplayer Lobbies to become Single-Player Lobbies, forces some bots to race. (Breaks Test-Drive feature for MP races in Full Editor!!!)
+// ALLCHALLENGESSOLO = TRUE
+
+// Replace Challenge Editor with Full In Game Editor (that the devs used) that saves in the game files (does not load them by itself though!!!)
+//GMEDESIGNER = TRUE
+
+
+/// ?????
+
+//FIXROADSINIGE
+//FIXROADSINIGE = TRUE
+//FIXROADSINIGE = 1
+
+// It seems it's meant to unlock the roads that you unlock with save progression, but it does not seem to work.
+//DELOCKCHALLENGESROADS
+//DELOCKCHALLENGESROADS = 1
+//DELOCKCHALLENGESROADS = TRUE
+
+
+// ??
+//BOOTMENULIST = TRUE
+//BOOTMENULIST TRUE
+//BOOTMENULIST = 1
+//BOOTMENULIST "1"
+//BOOTMENULIST 1
+
+// Unsure.
+//INTROSTATE = FALSE
+
+// Network Bandwidth Settings...unsure if this really works.
+PUB_BANDWIDTH 150000
+
+// Max distance before you get disconnected from other players in freeride, without locking. Default Value from TDU2.
+// Setting to 1 seemed to keep me connected to others for 20+ Miles. The default value from TDU2 is probably quite far too.
+// Just commenting it out restores it back to default. You could also set to 999 for a very long distance.
+PUB_VISIBILITY_MAX 075
+
+// Max players on a console. Can be changed on Xbox 360 but nothing really happens, on PC it crashes.
+//NBMAXPLAYERS = 8
+
+// Disable Bot's Pathfinding. Causes them to drive in straight lines and in circles. This effects races too.
+//DISABLEPATHOPT = TRUE
+
+// ???
+
+//MAPSCREENSHOTSMNGENABLED
+//MAPSCREENSHOTSMNGENABLED 1
+//MAPSCREENSHOTSMNGENABLED = 1
+//MAPSCREENSHOTSMNGENABLED = TRUE
