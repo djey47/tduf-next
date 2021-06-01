@@ -19,7 +19,7 @@ Known sections are below, in order:
 
 - general header
 - sizes: kind of index
-- type mapping (optional)
+- type mapping
 - tree: directory and file hierarchy
 - order: maps tree to index
 - magic (optional): TBD
@@ -34,7 +34,7 @@ Game behaviour remains to be tested when putting wrong checksum for a section.
 
 ### Padding string (WTF)
 
-Every section and packed file end with a special, repeatable, padding string `STNICC2000 RULEZPADDING DATAS...-ORIC AND ATARI--COOL  MACHINES-`. Is this kind of alignment to improve file reading speed?
+Every section and packed file end with a special, repeatable, padding string `STNICC2000 RULEZPADDING DATAS...-ORIC AND ATARI--COOL  MACHINES-`. Is this kind of alignment to improve file reading speed? Its size is 80 bytes.
 
 It seems to be truncatable/replaceable though, but that has not been widely tested. Current TDUMT2 writer implementation does replace it btw ;)
 
@@ -59,7 +59,7 @@ Light diff, but still. That's in file sizes section, which gives start address o
 
 For each entry, TDU2 engine requires 20 bytes whereas TDU1's uses 16 bytes. Those 4 additional bytes are a `0x10` constant value as unsigned integer. Is this a desperate attempt in making TDU1 tools incompatible? :p
 
-To determine weither selected BNK is for TDU1 or TDU2, we'll thus check indirectly by using following formula: `file size data / (packed file count + 1)` (2 values which are available in general header data section). The '+1' allows to take into account a fake file size entry, which is meant to describe a padding zone, located right after the last real file. Theorically, this padding zone could have a zero length.
+To determine wheither selected BNK is for TDU1 or TDU2, we'll thus check indirectly by using following formula: `file size data / (packed file count + 1)` (2 values which are available in general header data section). The '+1' allows to take into account a fake file size entry, which is meant to describe a padding zone, located right after the last real file. Theorically, this padding zone could have a zero length.
 
 ## Weird 0x1 byte!
 
