@@ -22,3 +22,5 @@ Allows to handle R/W of Kaitai structure definitions.
 # App development ideas
 
 * Converter: TDUF structure file (-map.json) to Kaitai structure definition => see http://doc.kaitai.io/ksy_diagram.html
+
+* Writer : ksy to TDU binary inspired by TDUF writer.
