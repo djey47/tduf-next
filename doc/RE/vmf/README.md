@@ -5,6 +5,10 @@ VMF FORMAT SPECIFICATION
 
 Target platforms: PC, X360, PS2.
 
+## Credits
+
+Thanks to *resr rore* for the valuable information.
+
 ## Misc. notes
 
 - .VMF is a flash animation protocoll by eden games, like a flash player that stores graphics and animations for menu
@@ -17,8 +21,10 @@ Target platforms: PC, X360, PS2.
 
 ## Usage examples
 
-See included `vmf-example.jpg` file.
+![Examples](resources/vmf-example.jpg)
 
-## Credits
+### ESRB edit
 
-Thanks to *resr rore* for the valuable information.
+An example of log_in.bnk VMF, it stores couple of "Is" commands in this case the esrb icon on boot, here default is 0, when changed to 1 it enables the esrb logo on boot ! and other FScommands, Nb (number of) commands etc over all VMFs
+
+![ESRB](resources/vmf-esrb-edit.JPG)
