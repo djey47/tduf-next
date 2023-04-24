@@ -13,6 +13,6 @@
     "app-root-dir": "^1.0.2",
     "deepmerge": "^4.2.2",
     "kaitai-struct": "^0.9.0",
-    "yaml": "^1.10.0"
+    "yaml": "^2.2.2"
   }
 }
