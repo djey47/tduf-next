@@ -3,6 +3,7 @@ games:
   tdu:
     rootDirectory: "/home/foo/app/tdu"
     parsers:
+      pmi: Tdu1Pmi
   tdu2:
     rootDirectory: "/home/foo/app/tdu2"
     parsers:
