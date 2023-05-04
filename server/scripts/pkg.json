@@ -1,0 +1,9 @@
+{
+    "debug": true,
+    "targets": [ "node14-linux-x64", "node14-macos-x64", "node14-win-x64" ],
+    "assets": [ 
+        "../package.json",
+        "../config/tduf-next.server.config.yaml",
+        "../../client/dist/**/*"
+    ]
+}

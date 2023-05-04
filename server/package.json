@@ -1,0 +1,38 @@
+{
+  "name": "tduf-next-lab-node",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "env MODE_DEV=true node src/index.js",
+    "start:all": "npm start & cd ../client && npm run serve &",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint src",
+    "pack:full": "node scripts/package-full.js"
+  },
+  "author": "djey",
+  "license": "MIT",
+  "dependencies": {
+    "app-root-dir": "^1.0.2",
+    "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-emoji": "^1.10.0",
+    "opn": "^6.0.0",
+    "yaml": "^1.10.0"
+  },
+  "devDependencies": {
+    "archiver": "^4.0.1",
+    "eslint": "^7.2.0",
+    "eslint-plugin-jest": "^23.17.1",
+    "eslint-plugin-node": "^11.1.0",
+    "jest": "^26.1.0",
+    "pkg": "^4.4.8",
+    "rimraf": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14.4.0"
+  }
+}

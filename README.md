@@ -38,3 +38,89 @@ More details will be shared later. In the meantime, feel free to create issues o
 
 
 Enough talking, time to make it last... forever!
+
+---
+
+New TDUF platform, aiming for efficiency, ease of use and development
+
+This is POC for TDUF.next platform, nodejs server and webapp.
+
+## Project tree
+
+- `.vscode`: IDE configuration
+- `client`: webapp GUI project
+- `common`: scripts and resources shared between client and server projects
+    - `config`: dev tools configuration
+- `releases`: target of bundled applications (kept locally)
+- `server`: backend project.
+
+## Server
+
+Head to `server` directory first.
+
+### Install
+
+It will require some global modules.
+
+    npm add -g pkg
+    npm install
+
+### Development
+
+- Start dev server: `npm start`
+- Start dev server and client: `npm run start:all`
+
+### Release and packaging
+
+Create ZIP release archive with embedded, server, client and nodeJS runtime: `npm run pack:full`
+
+### Application configuration
+- Embedded in pkg snapshot: `config/tduf-next.server.config`
+- Overridable with
+    - `<root-dir>/server/config/tduf-next.server.config` (DEV)
+    - `~/.tduf-next/tduf-next.server.local.config.yaml` (PROD).
+
+## Client
+
+Head to `client` directory first.
+
+### Project setup
+
+    npm install
+
+#### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+#### Compiles and minifies for production
+```
+npm run build
+```
+
+#### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Application configuration
+
+That is consolidated server+client configuration.
+
+- Provided by server, calling REST GET `/config` endpoint
+- Overridable with:
+    - `<root-dir>/client/src/config/tduf-next.client.config` (DEV)
+    - `~/.tduf-next/tduf-next.server.local.config.yaml` (PROD).
+
+## Common
+
+Those scripts are applicable to both `client` and `server` directories.
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Performs unit tests
+
+- Single launch with coverage stats: `npm test`
+- Interactive mode with code reload: ` npm run test:watch`.
